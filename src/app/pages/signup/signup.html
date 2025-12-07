@@ -1,0 +1,63 @@
+<app-header></app-header>
+
+<div class="container py-5 px-2">
+  <div class="row">
+    <div class="col-md-7"></div>
+    <div class="col-md-5">
+      <div>
+        <h2>Sign Up</h2>
+        <p>Sign up to start tracking your habits.</p>
+
+        <form class="form pt-5" (ngSubmit)="submitForm()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  [field]="signUpForm.firstname"
+                  placeholder="First Name"
+                />
+                <label for="firstName" class="form-label">First Name</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  [field]="signUpForm.lastname"
+                  placeholder="Last Name"
+                />
+                <label for="lastName" class="form-label">Last Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-floating my-4">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              [field]="signUpForm.email"
+              placeholder="Email Address"
+            />
+            <label for="email" class="form-label">Email Address</label>
+          </div>
+          <div class="form-floating my-4">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              [field]="signUpForm.password"
+              placeholder="Password"
+            />
+            <label for="password" class="form-label">Password</label>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

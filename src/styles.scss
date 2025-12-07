@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+$primary: #4e75ff;
+$secondary: #6f6362;
+$success: #3fd87e;
+$danger: #f65b53;
+$warning: #f7b84f;
+$info: #243984;
+$light: #f8f9fa;
+$dark: #343a40;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "danger": $danger,
+  "warning": $warning,
+  "info": $info,
+  "light": $light,
+  "dark": $dark,
+);
+
+@use "bootstrap/scss/bootstrap";
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../public/fonts/Roboto-VariableFont_wdth\,wght.ttf') format('truetype');
+    font-display: swap;
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
