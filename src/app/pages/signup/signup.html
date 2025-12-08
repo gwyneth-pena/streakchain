@@ -8,19 +8,28 @@
         <h2>Sign Up</h2>
         <p>Sign up to start tracking your habits.</p>
 
-        <form class="form pt-5" (ngSubmit)="submitForm()">
+        <form class="form pt-5" (submit)="submitForm($event)" novalidate>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 mb-4 mb-md-0">
               <div class="form-floating">
                 <input
                   type="text"
                   class="form-control"
                   id="firstName"
                   [field]="signUpForm.firstname"
+                  [ngClass]="{
+                    'is-invalid': signUpForm.firstname().invalid() && isFormSubmitted
+                  }"
                   placeholder="First Name"
                 />
                 <label for="firstName" class="form-label">First Name</label>
               </div>
+              @if(signUpForm.firstname().invalid() && isFormSubmitted) { @for(error of
+              signUpForm.firstname().errors(); track error.message) {
+              <small class="text-danger">
+                {{ error.message }}
+              </small>
+              } }
             </div>
             <div class="col-md-6">
               <div class="form-floating">
@@ -29,33 +38,67 @@
                   class="form-control"
                   id="lastName"
                   [field]="signUpForm.lastname"
+                  [ngClass]="{
+                    'is-invalid': signUpForm.lastname().invalid() && isFormSubmitted
+                  }"
                   placeholder="Last Name"
                 />
                 <label for="lastName" class="form-label">Last Name</label>
               </div>
+              @if(signUpForm.lastname().invalid() && isFormSubmitted) { @for(error of
+              signUpForm.lastname().errors(); track error.message) {
+              <small class="text-danger">
+                {{ error.message }}
+              </small>
+              } }
+            </div>
+
+            <div class="col-md-12 my-4">
+              <div class="form-floating">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  [field]="signUpForm.email"
+                  [ngClass]="{
+                    'is-invalid': signUpForm.email().invalid() && isFormSubmitted
+                  }"
+                  placeholder="Email Address"
+                />
+                <label for="email" class="form-label">Email Address</label>
+              </div>
+              @if(signUpForm.email().invalid() && isFormSubmitted) { @for(error of
+              signUpForm.email().errors(); track error.message) {
+              <small class="text-danger">
+                {{ error.message }}
+              </small>
+              } }
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-floating">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  [field]="signUpForm.password"
+                  [ngClass]="{
+                    'is-invalid': signUpForm.password().invalid() && isFormSubmitted
+                  }"
+                  placeholder="Password"
+                />
+                <label for="password" class="form-label">Password</label>
+              </div>
+              @if(signUpForm.password().invalid() && isFormSubmitted) { @for(error of
+              signUpForm.password().errors(); track error.message) {
+              <small class="text-danger">
+                {{ error.message }}
+              </small>
+              } }
             </div>
           </div>
-          <div class="form-floating my-4">
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              [field]="signUpForm.email"
-              placeholder="Email Address"
-            />
-            <label for="email" class="form-label">Email Address</label>
-          </div>
-          <div class="form-floating my-4">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              [field]="signUpForm.password"
-              placeholder="Password"
-            />
-            <label for="password" class="form-label">Password</label>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+
+          <button type="submit" class="btn btn-primary w-100 mt-4">Sign Up</button>
         </form>
       </div>
     </div>

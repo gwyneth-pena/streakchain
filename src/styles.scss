@@ -20,6 +20,8 @@ $theme-colors: (
 );
 
 @use "bootstrap/scss/bootstrap";
+@use '@ngxpert/hot-toast/src/styles/styles.scss';
+
 
 @font-face {
     font-family: 'Roboto';
