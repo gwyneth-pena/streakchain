@@ -23,7 +23,7 @@ interface SignupData {
   styleUrl: './signup.scss',
 })
 export class Signup {
-  private signUpModel = signal<SignupData>({
+  signUpModel = signal<SignupData>({
     firstname: '',
     lastname: '',
     email: '',
@@ -73,7 +73,7 @@ export class Signup {
     }
   }
 
-  private async signUpUser(params: SignupData) {
+  async signUpUser(params: SignupData) {
     this.spinner.show();
     const response = await lastValueFrom(this.userService.signUp(params));
     this.spinner.hide();
