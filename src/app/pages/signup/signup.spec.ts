@@ -70,7 +70,7 @@ describe('Signup', () => {
       identifier: '',
     });
     component['formWatchers']();
-    await component.submitForm(new Event('submit'));
+    component.submitForm(new Event('submit'));
     expect(userMockService.signUp).toHaveBeenCalledWith(component.signUpModel());
   });
 

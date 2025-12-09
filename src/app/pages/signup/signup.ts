@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Meta, Title } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 interface SignupData {
   firstname: string;
@@ -14,6 +16,13 @@ interface SignupData {
   password: string;
   method?: string;
   identifier?: string;
+  token?: string;
+}
+
+declare global {
+  interface Window {
+    google: any;
+  }
 }
 
 @Component({
@@ -23,14 +32,17 @@ interface SignupData {
   styleUrl: './signup.scss',
 })
 export class Signup {
-  signUpModel = signal<SignupData>({
+  initialSignUpModel: SignupData = {
     firstname: '',
     lastname: '',
     email: '',
     password: '',
     method: 'email',
     identifier: '',
-  });
+    token: '',
+  };
+
+  signUpModel = signal<SignupData>(this.initialSignUpModel);
 
   signUpForm = form(this.signUpModel, (schemaPath) => {
     if (this.signUpModel().method === 'email') {
@@ -47,21 +59,20 @@ export class Signup {
   constructor(
     private userService: UserService,
     private toast: HotToastService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private title: Title,
+    private meta: Meta
   ) {
+    this.title.setTitle('Signup | StreakChain');
+    this.meta.addTag({ name: 'description', content: 'Sign up to start tracking your habits.' });
+
     effect(() => {
       this.formWatchers();
     });
   }
 
-  private formWatchers() {
-    const method = this.signUpModel().method;
-    if (method !== 'email') return;
-
-    this.signUpModel.update((model) => {
-      model.identifier = model.email;
-      return model;
-    });
+  ngOnInit() {
+    this.initializeGoogleClient();
   }
 
   submitForm(event: Event) {
@@ -79,6 +90,40 @@ export class Signup {
     this.spinner.hide();
     if (response.status === 200) {
       this.toast.success('Signup successful!');
+      this.signUpModel.set(this.initialSignUpModel);
+      this.isFormSubmitted = false;
     }
+  }
+
+  continueWithGoogle() {
+    const google = (window as any).google;
+    if (!google || !google.accounts) return;
+
+    google.accounts.id.prompt();
+  }
+
+  private formWatchers() {
+    const method = this.signUpModel().method;
+    if (method !== 'email') return;
+
+    this.signUpModel.update((model) => {
+      model.identifier = model.email;
+      return model;
+    });
+  }
+
+  initializeGoogleClient() {
+    const google = (window as any).google;
+    google?.accounts?.id.initialize({
+      client_id: environment.GOOGLE_CLIENT_ID,
+      use_fedcm_for_prompt: false,
+      callback: (response: any) => {
+        this.signUpUser({
+          ...this.signUpModel(),
+          method: 'google',
+          token: response.credential,
+        });
+      },
+    });
   }
 }
