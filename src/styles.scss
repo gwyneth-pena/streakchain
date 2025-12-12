@@ -93,24 +93,33 @@ body{
 
 .form-floating > .form-control {
   height: 38px !important;     
-  padding: 8px 12px !important;  
+  padding: 8px 12px 0px 12px !important;  
   font-size: 0.9rem !important;   
   border-radius: 6px !important;  
   background-color: #fafafa !important; 
-  border: 1px solid #dbdbdb !important; 
 }
 
-.form-floating > label {
-  font-size: 0.85rem !important;     
-  color: #8e8e8e !important;    
-  padding-left: 10px !important;
-  transform: translateY(0) scale(1) !important; 
-  pointer-events: none;  
-  transition: 0.2s ease all;
-}
+.form-floating {
+  > .form-control {
+    height: 38px !important;   
+    padding: 10px 12px 0px 12px !important;  
+    font-size: 0.9rem !important;
+    border-radius: 6px !important;
+    background-color: #fafafa !important;
+  }
 
-.form-floating > .form-control:focus + label,
-.form-floating > .form-control:not(:placeholder-shown) + label {
-  transform: translateY(-0.5rem) scale(0.8) !important;
-  color: #262626 !important;  
+  > label {
+    font-size: 0.85rem !important;
+    color: #8e8e8e !important;
+    padding-left: 14px !important;
+    transform: translateY(0) scale(1) !important;
+    pointer-events: none;
+    transition: 0.2s ease all;
+  }
+
+  > .form-control:focus + label,
+  > .form-control:not(:placeholder-shown) + label {
+    transform: translateY(-0.4rem) scale(0.8) !important; 
+    color: #262626 !important;
+  }
 }
