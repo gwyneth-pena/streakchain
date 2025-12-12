@@ -1,1 +1,66 @@
-<p>login works!</p>
+<div class="container py-5 px-2">
+  <div class="row px-2 px-md-5">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">
+      <div>
+        <h2>Login</h2>
+        <p>Start tracking your habits with ease.</p>
+
+        <form class="form pt-3" (submit)="submitForm($event)" novalidate>
+          <div class="row">
+            <div class="col-md-12 my-4">
+              <div class="form-floating">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  [field]="signInForm.identifier"
+                  [ngClass]="{
+                    'is-invalid': signInForm.identifier().invalid() && isFormSubmitted
+                  }"
+                  placeholder="Email Address"
+                />
+                <label for="email" class="form-label">Email Address</label>
+              </div>
+              @if(signInForm.identifier().invalid() && isFormSubmitted) { @for(error of
+              signInForm.identifier().errors(); track error.message) {
+              <small class="text-danger">
+                {{ error.message }}
+              </small>
+              } }
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-floating">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  [field]="signInForm.password"
+                  [ngClass]="{
+                    'is-invalid': signInForm.password().invalid() && isFormSubmitted
+                  }"
+                  placeholder="Password"
+                />
+                <label for="password" class="form-label">Password</label>
+              </div>
+              @if(signInForm.password().invalid() && isFormSubmitted) { @for(error of
+              signInForm.password().errors(); track error.message) {
+              <small class="text-danger">
+                {{ error.message }}
+              </small>
+              } }
+            </div>
+          </div>
+
+          <div class="mx-auto mt-3" style="width: 250px">
+            <button type="submit" class="btn btn-primary mt-4 mb-2 w-100">Sign Up</button>
+            <app-google-sign-in-button
+              (googleTokenId)="handleGoogleSignIn($event)"
+            ></app-google-sign-in-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Signup } from './signup';
 import { vi } from 'vitest';
 import { UserService } from '../../shared/services/user-service';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 
 describe('Signup', () => {

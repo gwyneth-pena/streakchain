@@ -1,5 +1,4 @@
 import { Component, effect, signal } from '@angular/core';
-import { Header } from '../../shared/components/header/header';
 import { email, Field, form, required } from '@angular/forms/signals';
 import { UserService } from '../../shared/services/user-service';
 import { CommonModule } from '@angular/common';
@@ -7,7 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Meta, Title } from '@angular/platform-browser';
-import { environment } from '../../../environments/environment';
+import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
 
 interface SignupData {
   firstname: string;
@@ -19,15 +18,9 @@ interface SignupData {
   token?: string;
 }
 
-declare global {
-  interface Window {
-    google: any;
-  }
-}
-
 @Component({
   selector: 'app-signup',
-  imports: [Header, Field, CommonModule],
+  imports: [Field, CommonModule, GoogleSignInButton],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })
@@ -55,6 +48,7 @@ export class Signup {
   });
 
   isFormSubmitted: boolean = false;
+  isGooglePromptOpen = false;
 
   constructor(
     private userService: UserService,
@@ -63,16 +57,12 @@ export class Signup {
     private title: Title,
     private meta: Meta
   ) {
-    this.title.setTitle('Signup | StreakChain');
+    this.title.setTitle('Sign Up | StreakChain');
     this.meta.addTag({ name: 'description', content: 'Sign up to start tracking your habits.' });
 
     effect(() => {
       this.formWatchers();
     });
-  }
-
-  ngOnInit() {
-    this.initializeGoogleClient();
   }
 
   submitForm(event: Event) {
@@ -82,6 +72,14 @@ export class Signup {
     if (this.signUpForm().valid()) {
       this.signUpUser(this.signUpModel());
     }
+  }
+
+  handleGoogleSignUp(token: string) {
+    this.signUpUser({
+      ...this.signUpModel(),
+      method: 'google',
+      token,
+    });
   }
 
   async signUpUser(params: SignupData) {
@@ -95,13 +93,6 @@ export class Signup {
     }
   }
 
-  continueWithGoogle() {
-    const google = (window as any).google;
-    if (!google || !google.accounts) return;
-
-    google.accounts.id.prompt();
-  }
-
   private formWatchers() {
     const method = this.signUpModel().method;
     if (method !== 'email') return;
@@ -109,21 +100,6 @@ export class Signup {
     this.signUpModel.update((model) => {
       model.identifier = model.email;
       return model;
-    });
-  }
-
-  initializeGoogleClient() {
-    const google = (window as any).google;
-    google?.accounts?.id.initialize({
-      client_id: environment.GOOGLE_CLIENT_ID,
-      use_fedcm_for_prompt: false,
-      callback: (response: any) => {
-        this.signUpUser({
-          ...this.signUpModel(),
-          method: 'google',
-          token: response.credential,
-        });
-      },
     });
   }
 }

@@ -16,4 +16,10 @@ export class UserService {
       observe: 'response',
     });
   }
+
+  signIn(data: any): Observable<any> {
+    return this.http.post<Observable<any>>(`${this.API_URL}/users/login`, data, {
+      observe: 'response',
+    });
+  }
 }

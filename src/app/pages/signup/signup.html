@@ -1,16 +1,14 @@
-<app-header></app-header>
-
 <div class="container py-5 px-2">
-  <div class="row">
-    <div class="col-md-7"></div>
-    <div class="col-md-5">
+  <div class="row px-2 px-md-5">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">
       <div>
         <h2>Sign Up</h2>
         <p>Sign up to start tracking your habits.</p>
 
-        <form class="form pt-5" (submit)="submitForm($event)" novalidate>
+        <form class="form pt-3" (submit)="submitForm($event)" novalidate>
           <div class="row">
-            <div class="col-md-6 mb-4 mb-md-0">
+            <div class="col-md-12 mb-2">
               <div class="form-floating">
                 <input
                   type="text"
@@ -31,7 +29,7 @@
               </small>
               } }
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12 mb-2">
               <div class="form-floating">
                 <input
                   type="text"
@@ -53,7 +51,7 @@
               } }
             </div>
 
-            <div class="col-md-12 my-4">
+            <div class="col-md-12 mb-2">
               <div class="form-floating">
                 <input
                   type="email"
@@ -98,15 +96,15 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100 mt-4">Sign Up</button>
-          <hr />
-          <button
-            type="button"
-            class="btn btn-outline-primary w-100"
-            (click)="continueWithGoogle()"
+          <div
+            class="mx-auto mt-2"
+            style="width: 250px"
           >
-            <i class="ti ti-brand-google me-2"></i>Continue with Google
-          </button>
+            <button type="submit" class="btn btn-primary mt-4 mb-2 w-100">Sign Up</button>
+            <app-google-sign-in-button
+              (googleTokenId)="handleGoogleSignUp($event)"
+            ></app-google-sign-in-button>
+          </div>
         </form>
       </div>
     </div>
