@@ -7,6 +7,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Meta, Title } from '@angular/platform-browser';
 import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
+import { RouterLink, RouterModule } from '@angular/router';
 
 interface SignupData {
   firstname: string;
@@ -20,7 +21,7 @@ interface SignupData {
 
 @Component({
   selector: 'app-signup',
-  imports: [Field, CommonModule, GoogleSignInButton],
+  imports: [Field, CommonModule, GoogleSignInButton, RouterLink, RouterModule],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })

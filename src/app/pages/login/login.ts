@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { email, Field, form, required } from '@angular/forms/signals';
 import { Meta, Title } from '@angular/platform-browser';
-import { environment } from '../../../environments/environment';
 import { UserService } from '../../shared/services/user-service';
 import { lastValueFrom } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
+import { RouterModule } from '@angular/router';
 
 interface SignInData {
   identifier: string;
@@ -18,7 +18,7 @@ interface SignInData {
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, Field, GoogleSignInButton],
+  imports: [CommonModule, Field, GoogleSignInButton, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

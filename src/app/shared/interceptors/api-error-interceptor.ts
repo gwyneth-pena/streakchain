@@ -9,8 +9,10 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const spinner = inject(NgxSpinnerService);
   return next(req).pipe(
     catchError((error: any) => {
-      toast.error(error?.error?.detail?.[0]?.msg || 'An unexpected error occurred.');
       spinner.hide();
+      if (error.status !== 401) {
+        toast.error(error?.error?.detail?.[0]?.msg || 'An unexpected error occurred.');
+      }
       return throwError(() => error);
     })
   );

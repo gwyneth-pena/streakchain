@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiErrorInterceptor } from './shared/interceptors/api-error-interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { authInterceptor } from './shared/interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +15,7 @@ export const appConfig: ApplicationConfig = {
       position: 'top-right',
       theme: 'snackbar'
     }),
-    provideHttpClient(withInterceptors([apiErrorInterceptor])),
+    provideHttpClient(withInterceptors([ authInterceptor, apiErrorInterceptor])),
     provideAnimations(),
   ],
 };

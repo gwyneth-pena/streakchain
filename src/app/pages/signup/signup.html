@@ -95,17 +95,19 @@
               } }
             </div>
           </div>
-
-          <div
-            class="mx-auto mt-2"
-            style="width: 250px"
-          >
+          <div class="mx-auto mt-2" style="width: 250px">
             <button type="submit" class="btn btn-primary mt-4 mb-2 w-100">Sign Up</button>
             <app-google-sign-in-button
               (googleTokenId)="handleGoogleSignUp($event)"
             ></app-google-sign-in-button>
           </div>
         </form>
+      </div>
+      <div class="mt-5 w-100 text-center">
+        <small>
+          Already have an account?
+          <a routerLink="/login" class="text-primary cursor-pointer">Sign in</a>
+        </small>
       </div>
     </div>
   </div>
