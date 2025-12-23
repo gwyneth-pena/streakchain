@@ -1,5 +1,5 @@
 import { Component, effect, signal } from '@angular/core';
-import { email, Field, form, required } from '@angular/forms/signals';
+import { email, Field, form, minLength, required } from '@angular/forms/signals';
 import { UserService } from '../../shared/services/user-service';
 import { CommonModule } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
@@ -44,6 +44,9 @@ export class Signup {
       required(schemaPath.lastname, { message: 'Last name is required.' });
       required(schemaPath.email, { message: 'Email is required.' });
       required(schemaPath.password, { message: 'Password is required.' });
+      minLength(schemaPath.password, 8, {
+        message: 'Password must be at least 8 characters long.',
+      });
       email(schemaPath.email, { message: 'Invalid email format.' });
     }
   });

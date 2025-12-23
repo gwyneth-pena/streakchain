@@ -55,12 +55,18 @@ export class Login {
 
   async signInUser(params: SignInData) {
     this.spinner.show();
-    const response = await lastValueFrom(this.userService.signIn(params));
-    this.spinner.hide();
-    if (response.status === 200) {
-      this.toast.success('Login successful!');
-      this.signInModel.set(this.initialSignInModel);
-      this.isFormSubmitted = false;
+    try {
+      const response = await lastValueFrom(this.userService.signIn(params));
+      this.spinner.hide();
+      if (response.status === 200) {
+        this.toast.success('Login successful!');
+        this.signInModel.set(this.initialSignInModel);
+        this.isFormSubmitted = false;
+      }
+    } catch (error) {
+      this.toast.error('Invalid credentials. Please try again.');
+    } finally {
+      this.spinner.hide();
     }
   }
 

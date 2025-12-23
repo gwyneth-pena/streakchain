@@ -27,6 +27,18 @@ export class UserService {
     });
   }
 
+  requestPasswordReset(data: any): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}/users/request-password-reset`, data, {
+      observe: 'response',
+    });
+  }
+
+  resetPassword(data: any): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}/users/reset-password`, data, {
+      observe: 'response',
+    });
+  }
+
   logout(): Observable<any> {
     return this.http.post<any>(
       `${this.API_URL}/users/logout`,

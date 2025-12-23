@@ -1,6 +1,14 @@
 <div class="container py-5 px-2">
-  <div class="row px-2 px-md-5">
-    <div class="col-md-8"></div>
+  <div class="row px-2 px-md-5 d-flex align-items-center justify-content-center">
+    <div class="col-md-8">
+      <div class="d-none d-md-flex align-items-center justify-content-center h-100">
+        <img
+          src="/images/authentication.svg"
+          alt="Sign In"
+          class="img-fluid mx-auto d-block me-5 pe-5"
+        />
+      </div>
+    </div>
     <div class="col-md-4">
       <div>
         <h2>Login</h2>
@@ -51,6 +59,14 @@
               </small>
               } }
             </div>
+          </div>
+          <div class="row text-end mt-2">
+            <a
+              routerLink="/forgot-password-request"
+              class="text-primary cursor-pointer"
+              style="font-size: 12px"
+              >Forgot Password?</a
+            >
           </div>
 
           <div class="mx-auto mt-3" style="width: 250px">
