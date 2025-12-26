@@ -7,7 +7,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Meta, Title } from '@angular/platform-browser';
 import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 interface SignupData {
   firstname: string;
@@ -59,7 +59,8 @@ export class Signup {
     private toast: HotToastService,
     private spinner: NgxSpinnerService,
     private title: Title,
-    private meta: Meta
+    private meta: Meta,
+    private router: Router
   ) {
     this.title.setTitle('Sign Up | StreakChain');
     this.meta.addTag({ name: 'description', content: 'Sign up to start tracking your habits.' });
@@ -94,6 +95,7 @@ export class Signup {
       this.toast.success('Signup successful!');
       this.signUpModel.set(this.initialSignUpModel);
       this.isFormSubmitted = false;
+      this.router.navigate(['/habit-tracker']);
     }
   }
 

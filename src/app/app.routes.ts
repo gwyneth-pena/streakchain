@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { unauthGuard } from './shared/guards/unauth-guard';
+import { authGuard } from './shared/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/reset-password/reset-password').then((m) => m.ResetPassword),
     canActivate: [unauthGuard],
-  }
+  },
+  {
+    path: 'habit-tracker',
+    loadComponent: () => import('./pages/habit-tracker/habit-tracker').then((m) => m.HabitTracker),
+    canActivate: [authGuard],
+  },
 ];

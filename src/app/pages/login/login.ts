@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 interface SignInData {
   identifier: string;
@@ -47,7 +47,8 @@ export class Login {
     private meta: Meta,
     private userService: UserService,
     private toast: HotToastService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {
     this.title.setTitle('Login | StreakChain');
     this.meta.addTag({ name: 'description', content: 'Sign in to your account.' });
@@ -62,6 +63,7 @@ export class Login {
         this.toast.success('Login successful!');
         this.signInModel.set(this.initialSignInModel);
         this.isFormSubmitted = false;
+        this.router.navigate(['/habit-tracker']);
       }
     } catch (error) {
       this.toast.error('Invalid credentials. Please try again.');

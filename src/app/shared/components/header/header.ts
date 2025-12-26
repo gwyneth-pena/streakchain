@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Component, effect, signal } from '@angular/core';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user-service';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -13,20 +13,18 @@ import { CommonModule } from '@angular/common';
 export class Header {
   user: any = signal(null);
 
-  constructor(private userService: UserService) {}
-
-  async ngOnInit() {
-    await this.getCurrentUser();
-  }
-
-  async getCurrentUser() {
-    const user = await this.userService.getCurrentUser();
-    this.user.set(user);
+  constructor(private userService: UserService, private router: Router) {
+    effect(() => {
+      if (this.userService.currentUser()?.is_authenticated) {
+        this.user.set(this.userService.currentUser());
+      }
+    });
   }
 
   async logout() {
     await lastValueFrom(this.userService.logout());
-    this.userService.currentUser = { is_authenticated: false };
+    this.userService.currentUser.set({ is_authenticated: false });
     this.user.set(null);
+    this.router.navigate(['/login']);
   }
 }

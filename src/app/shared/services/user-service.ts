@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { last, lastValueFrom, Observable } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -9,9 +9,7 @@ import { environment } from '../../../environments/environment';
 export class UserService {
   private API_URL = environment.API_URL;
 
-  currentUser: any = {
-    is_authenticated: false,
-  };
+  currentUser: any = signal({ is_authenticated: false });
 
   constructor(private http: HttpClient) {}
 
@@ -58,14 +56,12 @@ export class UserService {
   async getCurrentUser() {
     try {
       const currentUser = await lastValueFrom(this.getCurrentUserInfo());
-      this.currentUser = {
+      this.currentUser.set({
         is_authenticated: true,
         ...currentUser.body,
-      };
+      });
     } catch (e: any) {
-      this.currentUser = {
-        is_authenticated: false,
-      };
+      this.currentUser.set({ is_authenticated: false });
     }
     return this.currentUser;
   }
