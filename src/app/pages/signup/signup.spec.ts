@@ -87,4 +87,19 @@ describe('Signup', () => {
     await component.submitForm(new Event('submit'));
     expect(toastMock.success).toHaveBeenCalledWith('Signup successful!');
   });
+
+  it('should redirect to habit tracker when sign up is successful', async () => {
+    const routerSpy = vi.spyOn(component['router'], 'navigate');
+    component.signUpModel.set({
+      firstname: 'John',
+      lastname: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'password',
+      method: 'email',
+      identifier: '',
+    });
+    component['formWatchers']();
+    await component.submitForm(new Event('submit'));
+    expect(routerSpy).toHaveBeenCalledWith(['/habit-tracker']);
+  });
 });
