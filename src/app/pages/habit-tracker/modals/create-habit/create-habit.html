@@ -1,0 +1,62 @@
+<div class="modal-content">
+  <div class="modal-header border-0">
+    <h5 class="modal-title">Create New Habit</h5>
+    <button class="btn-close" data-bs-dismiss="modal" (click)="ngbModalRef.close()"></button>
+  </div>
+
+  <div class="modal-body border-0">
+    <form>
+      <div class="row">
+        <div class="col-12 mb-2">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="e.g. Reading"
+              [field]="form.name"
+              [ngClass]="{
+                'is-invalid': form.name().invalid() && isFormSubmitted
+              }"
+            />
+            <label for="name" class="form-label">Habit</label>
+          </div>
+          @if(form.name().invalid() && isFormSubmitted) { @for(error of form.name().errors(); track
+          error.message) {
+          <small class="text-danger">
+            {{ error.message }}
+          </small>
+          } }
+        </div>
+        <div class="col-12">
+          <div class="form-floating">
+            <input
+              type="number"
+              class="form-control"
+              id="frequency"
+              placeholder="Frequency"
+              [field]="form.frequency"
+              [ngClass]="{
+                'is-invalid': form.frequency().invalid() && isFormSubmitted
+              }"
+            />
+            <label for="frequency" class="form-label">Frequency (Number of days to perform habit within a month)</label>
+          </div>
+          @if(form.frequency().invalid() && isFormSubmitted) { @for(error of
+          form.frequency().errors(); track error.message) {
+          <small class="text-danger">
+            {{ error.message }}
+          </small>
+          } }
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer border-0">
+    <button class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="ngbModalRef.close()">
+      Cancel
+    </button>
+    <button class="btn btn-primary" (click)="submitForm($event)">Save</button>
+  </div>
+</div>
