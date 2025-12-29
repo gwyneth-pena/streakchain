@@ -1,0 +1,76 @@
+.habit-tracker-container {
+  padding: 3rem 1rem;
+
+  @media (min-width: 768px) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .table {
+    font-size: 12px;
+  }
+
+  .today-column {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+  }
+
+  .habit-column {
+    width: 150px;    
+    max-width: 150px;
+    min-width: 150px;
+  }
+
+  .add-habit-btn {
+    font-size: 12px;
+  }
+
+  .month-navigation {
+    text-align: center;
+    margin-bottom: 1rem;
+
+    p {
+      margin: 0;
+
+      span {
+        cursor: pointer;
+
+        &.me-2 {
+          margin-right: 0.5rem;
+        }
+
+        &.ms-2 {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .calendar-table {
+    margin-top: 1.5rem;
+
+    th,
+    td {
+      text-align: center;
+    }
+
+    th > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .fw-bold {
+        font-weight: 600;
+      }
+
+      .text-muted {
+        font-size: 0.75rem;
+      }
+    }
+
+    .no-habits {
+      text-align: center;
+      color: #6f6362;
+    }
+  }
+}

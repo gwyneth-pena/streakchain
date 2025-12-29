@@ -6,10 +6,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { Meta, Title } from '@angular/platform-browser';
 import { lastValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-habit-tracker',
-  imports: [NgbModule],
+  imports: [NgbModule, CommonModule],
   templateUrl: './habit-tracker.html',
   styleUrl: './habit-tracker.scss',
 })
