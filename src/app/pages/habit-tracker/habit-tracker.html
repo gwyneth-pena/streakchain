@@ -55,6 +55,14 @@
               {{ habit.logs.length }}
             </td>
           </tr>
+          } @if(habits().length === 0) {
+          <tr>
+            <td colspan="4" class="text-center">
+              <span class="text-muted">
+                You haven't created any habits yet. Click on the button above to create one!
+              </span>
+            </td>
+          </tr>
           }
         </tbody>
       </table>
