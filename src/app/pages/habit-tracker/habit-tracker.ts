@@ -66,6 +66,12 @@ export class HabitTracker {
     };
   }
 
+  onCurrentMonthYearChange(monthIncrement: number) {
+    this.getNewCurrentMonthYear(monthIncrement);
+    this.getCalendarDays();
+    this.getHabits();
+  }
+
   getCalendarDays() {
     const { monthNumber, year } = this.currentMonthYear;
     const numberOfDays = new Date(year, monthNumber, 0).getDate();

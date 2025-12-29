@@ -1,4 +1,4 @@
-<div class="container py-5">
+<div class="container-fluid px-3 px-md-5 py-5">
   <div class="row mb-5">
     <div class="col-md-12 d-flex justify-content-end">
       <button class="btn btn-primary" (click)="openCreateHabitModal()">
@@ -10,11 +10,11 @@
     <div class="col-md-12 ms-auto text-center">
       <p>
         <span class="me-2">
-          <i class="ti ti-chevron-left cursor-pointer" (click)="getNewCurrentMonthYear(-1)"></i>
+          <i class="ti ti-chevron-left cursor-pointer" (click)="onCurrentMonthYearChange(-1)"></i>
         </span>
         {{ currentMonthYear.month }} {{ currentMonthYear.year }}
-        <span class="ms-2 cursor-pointer" (click)="getNewCurrentMonthYear(1)">
-          <i class="ti ti-chevron-right"></i>
+        <span class="ms-2 cursor-pointer">
+          <i class="ti ti-chevron-right" (click)="onCurrentMonthYearChange(1)"></i>
         </span>
       </p>
     </div>
