@@ -28,7 +28,7 @@
           </small>
           } }
         </div>
-        <div class="col-12">
+        <div class="col-12 mb-2">
           <div class="form-floating">
             <input
               type="number"
@@ -40,10 +40,37 @@
                 'is-invalid': form.frequency().invalid() && isFormSubmitted
               }"
             />
-            <label for="frequency" class="form-label">Frequency (Number of days to perform habit within a month)</label>
+            <label for="frequency" class="form-label"
+              >Frequency (Number of days to perform habit within a month)</label
+            >
           </div>
           @if(form.frequency().invalid() && isFormSubmitted) { @for(error of
           form.frequency().errors(); track error.message) {
+          <small class="text-danger">
+            {{ error.message }}
+          </small>
+          } }
+        </div>
+        <div class="col-12">
+          <div class="form-group d-flex align-items-center gap-2">
+            <label
+              for="color"
+              class="form-label mb-0 text-muted"
+              style="font-size: 12px; white-space: nowrap"
+            >
+              Color:
+            </label>
+            <input
+              type="color"
+              class="form-control p-0"
+              id="color"
+              [field]="form.color"
+              [ngClass]="{ 'is-invalid': form.color().invalid() && isFormSubmitted }"
+              style="height: 20px; width: 60px; border-radius: 0.25rem"
+            />
+          </div>
+          @if(form.color().invalid() && isFormSubmitted) { @for(error of form.color().errors();
+          track error.message) {
           <small class="text-danger">
             {{ error.message }}
           </small>
@@ -53,10 +80,7 @@
     </form>
   </div>
 
-  <div class="modal-footer border-0">
-    <button class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="ngbModalRef.close()">
-      Cancel
-    </button>
-    <button class="btn btn-primary" (click)="submitForm($event)">Save</button>
+  <div class="modal-footer border-0 d-flex">
+    <button class="btn btn-primary flex-fill" (click)="submitForm($event)">Save</button>
   </div>
 </div>

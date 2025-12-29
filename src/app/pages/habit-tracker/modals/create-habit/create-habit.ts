@@ -19,7 +19,7 @@ export class CreateHabit {
   initialFormModel: CreateHabitData = {
     name: '',
     frequency: 1,
-    color: '#7487cdff',
+    color: '#9db2ff',
   };
 
   formModel = signal<CreateHabitData>(this.initialFormModel);
