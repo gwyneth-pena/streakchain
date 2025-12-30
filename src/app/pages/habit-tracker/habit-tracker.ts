@@ -18,11 +18,20 @@ export class HabitTracker {
   habits = signal<any[]>([]);
   calendarDays = signal<any[]>([]);
 
-  currentMonthYear: { month: string; year: number; date: Date; monthNumber: number } = {
-    month: new Date().toLocaleString('default', { month: 'long' }),
-    year: new Date().getFullYear(),
-    date: new Date(),
-    monthNumber: new Date().getMonth() + 1,
+  now = new Date();
+
+  currentMonthYear: {
+    month: string;
+    year: number;
+    date: Date;
+    monthNumber: number;
+    numberOfDays: number;
+  } = {
+    date: this.now,
+    month: this.now.toLocaleString('default', { month: 'long' }),
+    year: this.now.getFullYear(),
+    monthNumber: this.now.getMonth() + 1,
+    numberOfDays: new Date(this.now.getFullYear(), this.now.getMonth() + 1, 0).getDate(),
   };
 
   dayNames: { [key: string]: string } = {
@@ -59,11 +68,13 @@ export class HabitTracker {
       currentDate.getMonth() + monthIncrement,
       currentDate.getDate()
     );
+    const numberOfDays = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
     this.currentMonthYear = {
       month: newDate.toLocaleString('default', { month: 'long' }),
       year: newDate.getFullYear(),
       date: newDate,
       monthNumber: newDate.getMonth() + 1,
+      numberOfDays: numberOfDays,
     };
   }
 
@@ -109,7 +120,16 @@ export class HabitTracker {
 
   async getHabits() {
     this.spinner.show();
-    const res = await lastValueFrom(this.habitsService.get());
+    const res = await lastValueFrom(
+      this.habitsService.get({
+        start_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
+          .toString()
+          .padStart(2, '0')}-01`,
+        end_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
+          .toString()
+          .padStart(2, '0')}-${this.currentMonthYear.numberOfDays.toString().padStart(2, '0')}`,
+      })
+    );
     this.spinner.hide();
     if (res.status === 200) {
       this.habits.set(res.body);

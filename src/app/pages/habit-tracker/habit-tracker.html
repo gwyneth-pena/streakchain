@@ -43,9 +43,26 @@
         <tbody>
           @for(habit of habits(); track habit.id) {
           <tr>
-            <td class="habit-column">{{ habit.name }}</td>
+            <td
+              class="habit-column"
+              [ngStyle]="{
+                borderRight: '5px solid ' + habit.color
+              }"
+            >
+              {{ habit.name }}
+            </td>
             @for(day of calendarDays(); track day.day) {
-            <td [ngClass]="{ 'today-column': day.isToday }"></td>
+            <td [ngClass]="{ 'today-column': day.isToday }">
+              @if(habit.logs.length && day.day ==
+              habit.logs[0]?.created_at?.split('T')[0]?.split('-')[2]) {
+              <i
+                class="ti ti-star-filled frequency-icon"
+                [ngStyle]="{
+                  color: habit.color
+                }"
+              ></i>
+              }
+            </td>
             }
             <td>{{ habit.frequency }}</td>
             <td>{{ habit.logs.length }}</td>

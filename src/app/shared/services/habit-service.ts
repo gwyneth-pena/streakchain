@@ -11,9 +11,10 @@ export class HabitService {
 
   constructor(private http: HttpClient) {}
 
-  get(): Observable<any> {
+  get(params: any = {}): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/habits`, {
       observe: 'response',
+      params : params
     });
   }
 
