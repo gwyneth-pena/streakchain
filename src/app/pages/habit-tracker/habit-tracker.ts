@@ -7,6 +7,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { Meta, Title } from '@angular/platform-browser';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { HabitLogService } from '../../shared/services/habit-log-service';
 
 @Component({
   selector: 'app-habit-tracker',
@@ -47,6 +48,7 @@ export class HabitTracker {
   constructor(
     private ngbModalService: NgbModal,
     private habitsService: HabitService,
+    private habitLogService: HabitLogService,
     private toast: HotToastService,
     private spinner: NgxSpinnerService,
     private title: Title,
@@ -144,5 +146,48 @@ export class HabitTracker {
       this.toast.success('Habit saved successfully!');
       this.getHabits();
     }
+  }
+
+  async saveHabitLog(habit: any, day: string) {
+    this.spinner.show();
+    const res = await lastValueFrom(
+      this.habitLogService.save({
+        habit_id: habit.id,
+        log_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
+          .toString()
+          .padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
+      })
+    );
+    this.spinner.hide();
+    if (res.status === 200) {
+      this.habits.update((habits) =>
+        habits.map((h) => (h.id === habit.id ? { ...h, logs: [...h.logs, res.body] } : h))
+      );
+    }
+  }
+
+  async deleteHabitLog(habitLog: any) {
+    this.spinner.show();
+    const res = await lastValueFrom(this.habitLogService.delete(habitLog.id));
+    this.spinner.hide();
+    if (res.status === 200) {
+      this.habits.update((habits) =>
+        habits.map((h) =>
+          h.id === habitLog.habit_id
+            ? { ...h, logs: h.logs.filter((log: any) => log.id !== habitLog.id) }
+            : h
+        )
+      );
+    }
+  }
+
+  hasHabitLog(habit: any, day: string) {
+    return habit.logs.some(
+      (log: any) =>
+        log.log_date ===
+        `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
+          .toString()
+          .padStart(2, '0')}-${day.toString().padStart(2, '0')}`
+    );
   }
 }

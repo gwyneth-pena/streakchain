@@ -26,7 +26,7 @@
         <thead>
           <tr>
             <th class="habit-column">Habits</th>
-            @for(day of calendarDays(); track day.day) {
+            @for(day of calendarDays(); track day.day + '-' + currentMonthYear.monthNumber) {
             <th [ngClass]="{ 'today-column': day.isToday }">
               <div>
                 <span class="fw-bold" [ngClass]="{ 'text-primary': day.isToday }">
@@ -42,7 +42,7 @@
         </thead>
         <tbody>
           @for(habit of habits(); track habit.id) {
-          <tr>
+          <tr class="align-middle">
             <td
               class="habit-column"
               [ngStyle]="{
@@ -52,11 +52,18 @@
               {{ habit.name }}
             </td>
             @for(day of calendarDays(); track day.day) {
-            <td [ngClass]="{ 'today-column': day.isToday }">
-              @if(habit.logs.length && day.day ==
-              habit.logs[0]?.created_at?.split('T')[0]?.split('-')[2]) {
+            <td
+              [ngClass]="{ 'today-column': day.isToday }"
+              class="cursor-pointer"
+              (click)="
+                hasHabitLog(habit, day.day)
+                  ? deleteHabitLog(habit.logs[0])
+                  : saveHabitLog(habit, day.day)
+              "
+            >
+              @if(habit.logs.length && day.day == habit.logs[0]?.log_date?.split('-')[2]) {
               <i
-                class="ti ti-star-filled frequency-icon"
+                class="ti ti-star-filled frequency-icon my-0 py-0"
                 [ngStyle]="{
                   color: habit.color
                 }"
