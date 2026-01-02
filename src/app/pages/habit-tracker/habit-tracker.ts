@@ -1,6 +1,5 @@
 import { Component, effect, signal } from '@angular/core';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CreateHabit } from './modals/create-habit/create-habit';
 import { HabitService } from '../../shared/services/habit-service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
@@ -8,6 +7,8 @@ import { Meta, Title } from '@angular/platform-browser';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { HabitLogService } from '../../shared/services/habit-log-service';
+import { SaveHabit } from './modals/save-habit/save-habit';
+import { Confirmation } from '../../shared/components/modals/confirmation/confirmation';
 
 @Component({
   selector: 'app-habit-tracker',
@@ -107,17 +108,39 @@ export class HabitTracker {
     this.calendarDays.set(calendarDays);
   }
 
-  async openCreateHabitModal() {
-    const modalRef: any = this.ngbModalService.open(CreateHabit, {
+  async openSaveHabitModal(habit?: any) {
+    const modalRef: any = this.ngbModalService.open(SaveHabit, {
       centered: true,
       size: 'md',
       backdrop: 'static',
     });
 
+    if (habit) {
+      modalRef.componentInstance.formModel.set(habit);
+    }
+
     const result = await modalRef.result;
     if (result) {
       this.saveHabit(result);
     }
+  }
+
+  async openDeleteHabitModal() {
+    const modalRef: any = this.ngbModalService.open(Confirmation, {
+      centered: true,
+      size: 'md',
+      backdrop: 'static',
+    });
+
+    modalRef.componentInstance.data.set({
+      title: 'Delete Habit',
+      message: 'Are you sure you want to delete this habit?',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    });
+
+    const result = await modalRef.result;
+    return result;
   }
 
   async getHabits() {
@@ -140,11 +163,30 @@ export class HabitTracker {
 
   async saveHabit(habit: any) {
     this.spinner.show();
-    const res = await lastValueFrom(this.habitsService.save(habit));
+    const res = await lastValueFrom(
+      habit.id ? this.habitsService.update(habit) : this.habitsService.save(habit)
+    );
     this.spinner.hide();
     if (res.status === 200) {
       this.toast.success('Habit saved successfully!');
-      this.getHabits();
+      if (habit.id) {
+        this.habits.update((habits) => habits.map((h) => (h.id === habit.id ? habit : h)));
+      } else {
+        this.habits.update((habits) => [...habits, habit]);
+      }
+    }
+  }
+
+  async deleteHabit(habit: any) {
+    const confirmed = await this.openDeleteHabitModal();
+    if (confirmed) {
+      this.spinner.show();
+      const res = await lastValueFrom(this.habitsService.delete(habit.id));
+      this.spinner.hide();
+      if (res.status === 200) {
+        this.toast.success('Habit deleted successfully!');
+        this.habits.update((habits) => habits.filter((h) => h.id !== habit.id));
+      }
     }
   }
 

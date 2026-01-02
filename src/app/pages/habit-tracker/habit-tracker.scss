@@ -21,6 +21,17 @@
     min-width: 150px;
   }
 
+  .habit-options {
+    font-size: 16px;
+    color: #6f6362;
+    display: none;
+  }
+
+  tr:hover .habit-options,
+  td.habit-column:hover .habit-options {
+    display: inline-block;
+  }
+
   .add-habit-btn {
     font-size: 12px;
   }

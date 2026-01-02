@@ -4,26 +4,28 @@ import { Field, form, min, max, required, validate } from '@angular/forms/signal
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorService } from '../../../../shared/services/color-service';
 
-interface CreateHabitData {
+interface SaveHabitData {
+  id: string;
   name: string;
   frequency: number;
   color: string;
 }
 
 @Component({
-  selector: 'app-create-habit',
+  selector: 'app-save-habit',
   imports: [NgbModule, Field, CommonModule],
-  templateUrl: './create-habit.html',
-  styleUrl: './create-habit.scss',
+  templateUrl: './save-habit.html',
+  styleUrl: './save-habit.scss',
 })
-export class CreateHabit {
-  initialFormModel: CreateHabitData = {
+export class SaveHabit {
+  initialFormModel: SaveHabitData = {
+    id: '',
     name: '',
     frequency: 1,
     color: '#9db2ff',
   };
 
-  formModel = signal<CreateHabitData>(this.initialFormModel);
+  formModel = signal<SaveHabitData>(this.initialFormModel);
 
   form = form(this.formModel, (schemaPath) => {
     required(schemaPath.name, { message: 'Name is required.' });

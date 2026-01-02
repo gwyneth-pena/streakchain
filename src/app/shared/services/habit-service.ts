@@ -14,12 +14,24 @@ export class HabitService {
   get(params: any = {}): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/habits`, {
       observe: 'response',
-      params : params
+      params: params,
     });
   }
 
   save(data: any): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/habits/create`, data, {
+      observe: 'response',
+    });
+  }
+
+  delete(habitId: string): Observable<any> {
+    return this.http.delete<any>(`${this.API_URL}/habits/${habitId}`, {
+      observe: 'response',
+    });
+  }
+
+  update(data: any): Observable<any> {
+    return this.http.patch<any>(`${this.API_URL}/habits/${data.id}`, data, {
       observe: 'response',
     });
   }

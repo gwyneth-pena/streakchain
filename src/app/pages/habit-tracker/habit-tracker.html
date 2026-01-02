@@ -14,7 +14,7 @@
   </div>
   <div class="row">
     <div class="col-md-12 d-flex justify-content-end">
-      <button class="btn btn-outline-primary add-habit-btn" (click)="openCreateHabitModal()">
+      <button class="btn btn-outline-primary add-habit-btn" (click)="openSaveHabitModal()">
         <i class="ti ti-plus"></i> Add New Habit
       </button>
     </div>
@@ -44,17 +44,22 @@
           @for(habit of habits(); track habit.id) {
           <tr class="align-middle">
             <td
-              class="habit-column"
+              class="habit-column pointer"
               [ngStyle]="{
                 borderRight: '5px solid ' + habit.color
               }"
             >
               {{ habit.name }}
+              <br />
+              <div class="habit-options">
+                <i (click)="openSaveHabitModal(habit)" class="ti ti-pencil me-2 pointer"></i>
+                <i (click)="deleteHabit(habit)" class="ti ti-trash me-2 pointer"></i>
+              </div>
             </td>
             @for(day of calendarDays(); track day.day) {
             <td
               [ngClass]="{ 'today-column': day.isToday }"
-              class="cursor-pointer"
+              class="pointer"
               (click)="
                 hasHabitLog(habit, day.day)
                   ? deleteHabitLog(habit.logs[0])
@@ -71,8 +76,8 @@
               }
             </td>
             }
-            <td>{{ habit.frequency }}</td>
-            <td>{{ habit.logs.length }}</td>
+            <td class="fw-bold">{{ habit.frequency }}</td>
+            <td class="fw-bold">{{ habit.logs.length }}</td>
           </tr>
           }
         </tbody>

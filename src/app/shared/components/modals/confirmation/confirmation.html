@@ -1,0 +1,19 @@
+<div class="modal-content">
+  <div class="modal-header border-0">
+    <h5 class="modal-title">{{ data().title }}</h5>
+    <button class="btn-close" data-bs-dismiss="modal" (click)="ngbModalRef.close()"></button>
+  </div>
+
+  <div class="modal-body border-0">
+    <p>{{ data().message }}</p>
+  </div>
+
+  <div class="modal-footer border-0 d-flex justify-content-between">
+    <button class="btn btn-primary flex-fill" (click)="ngbModalRef.close(true)">
+      {{ data().confirmButtonText }}
+    </button>
+    <button class="btn btn-outline-primary flex-fill" (click)="ngbModalRef.dismiss()">
+      {{ data().cancelButtonText }}
+    </button>
+  </div>
+</div>
