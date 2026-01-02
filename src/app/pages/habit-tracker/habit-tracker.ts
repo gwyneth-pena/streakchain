@@ -172,7 +172,10 @@ export class HabitTracker {
       if (habit.id) {
         this.habits.update((habits) => habits.map((h) => (h.id === habit.id ? habit : h)));
       } else {
-        this.habits.update((habits) => [...habits, habit]);
+        this.habits.update((habits) => [...habits, {
+          ...res.body,
+          logs: []
+        }]);
       }
     }
   }
