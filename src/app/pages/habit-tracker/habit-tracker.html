@@ -61,7 +61,7 @@
                   : saveHabitLog(habit, day.day)
               "
             >
-              @if(habit.logs.length && day.day == habit.logs[0]?.log_date?.split('-')[2]) {
+              @if(hasHabitLog(habit, day.day)) {
               <i
                 class="ti ti-star-filled frequency-icon my-0 py-0"
                 [ngStyle]="{
