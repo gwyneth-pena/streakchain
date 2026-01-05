@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SaveHabit } from './save-habit';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('SaveHabit', () => {
   let component: SaveHabit;
@@ -8,9 +9,17 @@ describe('SaveHabit', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SaveHabit]
-    })
-    .compileComponents();
+      imports: [SaveHabit],
+      providers: [
+        {
+          provide: NgbActiveModal,
+          useValue: {
+            close: vi.fn(),
+            dismiss: vi.fn(),
+          },
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SaveHabit);
     component = fixture.componentInstance;

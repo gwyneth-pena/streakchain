@@ -58,6 +58,7 @@
             </td>
             @for(day of calendarDays(); track day.day) {
             <td
+              data-testid="habit-tracker-cell"
               [ngClass]="{ 'today-column': day.isToday }"
               class="pointer"
               (click)="

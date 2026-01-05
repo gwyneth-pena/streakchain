@@ -35,7 +35,7 @@ export class GoogleSignInButton {
       },
     });
 
-    google.accounts.id.renderButton(document.getElementById('google-signin-button'), {
+    google?.accounts.id.renderButton(document.getElementById('google-signin-button'), {
       theme: 'filled_black',
       size: 'large',
       type: 'standard',
