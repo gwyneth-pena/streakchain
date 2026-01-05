@@ -163,7 +163,7 @@ describe('HabitTracker', () => {
     expect(component.hasHabitLog(habit, '1')).toEqual(true);
 
     vi.spyOn(habitLogService, 'delete').mockReturnValue(of({ status: 200, body: {} }));
-    
+
     habitTrackerCell.nativeElement.click();
     fixture.detectChanges();
 
@@ -172,6 +172,5 @@ describe('HabitTracker', () => {
 
     expect(habitLogService.delete).toHaveBeenCalledWith(habit.logs[0].id);
     expect(component.habits()[0].logs.length).toEqual(0);
-
   });
 });
