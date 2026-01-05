@@ -25,6 +25,6 @@ export class Header {
     await lastValueFrom(this.userService.logout());
     this.userService.currentUser.set({ is_authenticated: false });
     this.user.set(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 }

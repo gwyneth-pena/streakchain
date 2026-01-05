@@ -4,6 +4,11 @@ import { authGuard } from './shared/guards/auth-guard';
 
 export const routes: Routes = [
   {
+    path: '',
+    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+    canActivate: [unauthGuard],
+  },
+  {
     path: 'signup',
     loadComponent: () => import('./pages/signup/signup').then((m) => m.Signup),
     canActivate: [unauthGuard],
