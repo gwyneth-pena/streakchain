@@ -36,8 +36,8 @@
               </div>
             </th>
             }
-            <th>Goal</th>
             <th>Achieved</th>
+            <th>Goal</th>
           </tr>
         </thead>
         <tbody>
@@ -62,7 +62,7 @@
               class="pointer"
               (click)="
                 hasHabitLog(habit, day.day)
-                  ? deleteHabitLog(habit.logs[0])
+                  ? deleteHabitLog(getHabitLogForDay(habit, day.day))
                   : saveHabitLog(habit, day.day)
               "
             >
@@ -76,8 +76,22 @@
               }
             </td>
             }
-            <td class="fw-bold">{{ habit.frequency }}</td>
-            <td class="fw-bold">{{ habit.logs.length }}</td>
+            <td
+              class="fw-bold text-secondary"
+              [ngClass]="{
+                'bg-meet': habit.logs.length === habit.frequency
+              }"
+            >
+              {{ habit.logs.length }}
+            </td>
+            <td
+              class="fw-bold text-primary"
+              [ngClass]="{
+                'bg-meet': habit.logs.length === habit.frequency
+              }"
+            >
+              {{ habit.frequency }}
+            </td>
           </tr>
           }
         </tbody>

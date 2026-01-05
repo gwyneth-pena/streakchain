@@ -32,6 +32,15 @@
             <li (click)="logout()"><a class="dropdown-item">Logout</a></li>
           </ul>
         </li>
+        } @else {
+        <li>
+          <button class="btn btn-primary me-0 me-md-2" routerLink="/login">
+            Login
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-outline-primary" routerLink="/signup">Sign Up</button>
+        </li>
         }
       </ul>
     </div>

@@ -125,7 +125,7 @@ export class HabitTracker {
     }
   }
 
-  async openDeleteHabitModal() {
+  async openDeleteHabitModal(habitName: string) {
     const modalRef: any = this.ngbModalService.open(Confirmation, {
       centered: true,
       size: 'md',
@@ -134,7 +134,7 @@ export class HabitTracker {
 
     modalRef.componentInstance.data.set({
       title: 'Delete Habit',
-      message: 'Are you sure you want to delete this habit?',
+      message: `Are you sure you want to delete this habit (${habitName})?`,
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel',
     });
@@ -184,7 +184,7 @@ export class HabitTracker {
   }
 
   async deleteHabit(habit: any) {
-    const confirmed = await this.openDeleteHabitModal();
+    const confirmed = await this.openDeleteHabitModal(habit.name);
     if (confirmed) {
       this.spinner.show();
       const res = await lastValueFrom(this.habitsService.delete(habit.id));
@@ -237,5 +237,9 @@ export class HabitTracker {
           .toString()
           .padStart(2, '0')}-${day.toString().padStart(2, '0')}`
     );
+  }
+
+  getHabitLogForDay(habit: any, day: number) {
+    return habit.logs.find((log: any) => log.log_date.split('-')[2] == day);
   }
 }
