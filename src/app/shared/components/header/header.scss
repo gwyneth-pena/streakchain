@@ -1,28 +1,30 @@
-.user-icon {
-    font-size: 1.5rem;
-    vertical-align: middle;
+.navbar {
+  transition: box-shadow 0.2s ease;
 }
 
-.user-name{
-    color: #343a40;
-    font-weight: 500;
+.navbar-brand img {
+  border-radius: 6px;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  border-radius: 10px;
+  min-width: 180px;
+}
+
+.dropdown-item {
+  padding: 0.6rem 1rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f4f7ff;
 }
 
 .btn{
-    width: 120px;
-}
-
-@media screen and (max-width: 576px) {
-    .navbar-brand {
-        width: 120px;
-    }
-
-    .user-dropdown {
-        margin-top: 10px;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-bottom: 20px;
-    }
+    width: 150px !important;
 }
 
 @media screen and (max-width: 990px) {

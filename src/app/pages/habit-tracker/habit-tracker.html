@@ -41,7 +41,7 @@
           </tr>
         </thead>
         <tbody>
-          @for(habit of habits(); track habit.id) {
+          @defer(when habits()?.length){ @for(habit of habits(); track habit.id) {
           <tr class="align-middle">
             <td
               class="habit-column pointer"
@@ -78,7 +78,7 @@
             </td>
             }
             <td
-              class="fw-bold text-secondary"
+              class="fw-bold text-secondary frequency"
               [ngClass]="{
                 'bg-meet': habit.logs.length === habit.frequency
               }"
@@ -86,7 +86,7 @@
               {{ habit.logs.length }}
             </td>
             <td
-              class="fw-bold text-primary"
+              class="fw-bold text-primary frequency"
               [ngClass]="{
                 'bg-meet': habit.logs.length === habit.frequency
               }"
@@ -94,6 +94,14 @@
               {{ habit.frequency }}
             </td>
           </tr>
+          } @if(habits()?.length === 0) {
+          <tr>
+            <td [colSpan]="calendarDays().length + 3" class="text-center">
+              <i class="ti ti-sad"></i> No habits yet. Please click the button above to add one.
+            </td>
+          </tr>
+          } } @placeholder {
+          <td [colSpan]="calendarDays().length + 3" class="text-center">Loading...</td>
           }
         </tbody>
       </table>

@@ -1,46 +1,62 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-light py-2 px-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2 px-3 px-md-4">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">
-      <img src="images/StreakChain.png" alt="StreakChain Logo" height="40" />
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <img src="images/StreakChain.png" alt="StreakChain Logo" height="38" />
     </a>
 
     <button
-      class="navbar-toggler"
+      class="navbar-toggler border-0"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
     >
-      <span class="ti ti-menu-2 text-dark"></span>
+      <i class="ti ti-menu-2 fs-3 text-dark"></i>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        @if(user()?.is_authenticated) {
-        <li class="nav-item pointer dropdown px-4 user-dropdown">
+      <ul class="navbar-nav ms-auto mt-3 mt-lg-0 gap-2">
+        @if (user()?.is_authenticated) {
+
+        <li class="nav-item dropdown d-none d-lg-block">
           <a
-            class="text-decoration-none user-name py-0 my-0"
-            type="button"
+            class="nav-link d-flex align-items-center gap-2 fw-medium text-dark"
+            role="button"
             data-bs-toggle="dropdown"
           >
-            <i class="ti ti-user-circle me-2 user-icon"></i> {{ user()?.firstname }}
-            {{ user()?.lastname }}
+            {{ user()?.firstname }} {{ user()?.lastname }}
+            <i class="ti ti-chevron-down"></i>
           </a>
-          <ul class="dropdown-menu mt-2">
-            <li (click)="logout()"><a class="dropdown-item">Logout</a></li>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 pointer" (click)="logout()">
+                <i class="ti ti-logout text-danger"></i>
+                Logout
+              </a>
+            </li>
           </ul>
         </li>
-        } @else {
-        <li>
-          <button class="btn btn-primary me-0 me-md-2" routerLink="/login">
-            Login
+
+        <li class="nav-item d-lg-none">
+          <button
+            class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2"
+            (click)="logout()"
+          >
+            <i class="ti ti-logout"></i>
+            Logout
           </button>
         </li>
-        <li>
-          <button class="btn btn-outline-primary" routerLink="/signup">Sign Up</button>
+
+        } @else {
+
+        <li class="nav-item">
+          <button class="btn btn-outline-primary w-100" routerLink="/login">Login</button>
         </li>
+
+        <li class="nav-item">
+          <button class="btn btn-primary w-100" routerLink="/signup">Create Account</button>
+        </li>
+
         }
       </ul>
     </div>

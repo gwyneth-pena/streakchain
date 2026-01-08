@@ -17,7 +17,7 @@ import { Confirmation } from '../../shared/components/modals/confirmation/confir
   styleUrl: './habit-tracker.scss',
 })
 export class HabitTracker {
-  habits = signal<any[]>([]);
+  habits = signal<any[] | null>(null);
   calendarDays = signal<any[]>([]);
 
   now = new Date();
@@ -170,10 +170,10 @@ export class HabitTracker {
     if (res.status === 200) {
       this.toast.success('Habit saved successfully!');
       if (habit.id) {
-        this.habits.update((habits) => habits.map((h) => (h.id === habit.id ? habit : h)));
+        this.habits.update((habits) => habits?.map((h) => (h.id === habit.id ? habit : h)) || []);
       } else {
         this.habits.update((habits) => [
-          ...habits,
+          ...(habits || []),
           {
             ...res.body,
             logs: [],
@@ -191,7 +191,7 @@ export class HabitTracker {
       this.spinner.hide();
       if (res.status === 200) {
         this.toast.success('Habit deleted successfully!');
-        this.habits.update((habits) => habits.filter((h) => h.id !== habit.id));
+        this.habits.update((habits) => habits?.filter((h) => h.id !== habit.id) || []);
       }
     }
   }
@@ -208,8 +208,9 @@ export class HabitTracker {
     );
     this.spinner.hide();
     if (res.status === 200) {
-      this.habits.update((habits) =>
-        habits.map((h) => (h.id === habit.id ? { ...h, logs: [...h.logs, res.body] } : h))
+      this.habits.update(
+        (habits) =>
+          habits?.map((h) => (h.id === habit.id ? { ...h, logs: [...h.logs, res.body] } : h)) || []
       );
     }
   }
@@ -219,12 +220,13 @@ export class HabitTracker {
     const res = await lastValueFrom(this.habitLogService.delete(habitLog.id));
     this.spinner.hide();
     if (res.status === 200) {
-      this.habits.update((habits) =>
-        habits.map((h) =>
-          h.id === habitLog.habit_id
-            ? { ...h, logs: h.logs.filter((log: any) => log.id !== habitLog.id) }
-            : h
-        )
+      this.habits.update(
+        (habits) =>
+          habits?.map((h) =>
+            h.id === habitLog.habit_id
+              ? { ...h, logs: h.logs.filter((log: any) => log.id !== habitLog.id) }
+              : h
+          ) || []
       );
     }
   }
