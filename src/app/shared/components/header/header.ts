@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.scss',
 })
 export class Header {
-  user: any = signal({});
+  user: any = signal(null);
   isMenuCollapsed = signal(true);
 
   constructor(private userService: UserService, private router: Router) {
@@ -20,8 +20,6 @@ export class Header {
 
       if (this.userService.currentUser().is_authenticated) {
         this.user.set(this.userService.currentUser());
-      }else{
-        this.user.set(null);
       }
     });
   }
