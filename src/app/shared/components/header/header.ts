@@ -11,11 +11,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.scss',
 })
 export class Header {
-  user: any = signal(null);
-  isMenuCollapsed = signal(false);
+  user: any = signal({});
+  isMenuCollapsed = signal(true);
 
   constructor(private userService: UserService, private router: Router) {
-    effect(() => {
+    effect(async() => {
       if (this.userService.currentUser()?.is_authenticated) {
         this.user.set(this.userService.currentUser());
       }
