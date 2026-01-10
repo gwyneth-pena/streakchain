@@ -16,8 +16,12 @@ export class Header {
 
   constructor(private userService: UserService, private router: Router) {
     effect(async() => {
-      if (this.userService.currentUser()?.is_authenticated) {
+      if (!this.userService.currentUser()) return;
+
+      if (this.userService.currentUser().is_authenticated) {
         this.user.set(this.userService.currentUser());
+      }else{
+        this.user.set(null);
       }
     });
   }
