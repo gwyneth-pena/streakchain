@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Header {
   user: any = signal(null);
+  isMenuCollapsed = signal(false);
 
   constructor(private userService: UserService, private router: Router) {
     effect(() => {

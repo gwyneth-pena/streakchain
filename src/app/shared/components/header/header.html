@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2 px-3 px-md-4">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
-      <img src="images/StreakChain.png" alt="StreakChain Logo" height="38" />
+      <img src="images/StreakChain.png" alt="StreakChain Logo" />
     </a>
 
     <button
@@ -9,11 +9,17 @@
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav"
+      (click)="isMenuCollapsed.set(false)"
     >
       <i class="ti ti-menu-2 fs-3 text-dark"></i>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div
+      class="navbar-collapse pb-3 pb-lg-0"
+      id="navbarNav"
+      [class.collapse]="isMenuCollapsed()"
+      [class.show]="!isMenuCollapsed()"
+    >
       <ul class="navbar-nav ms-auto mt-3 mt-lg-0 gap-2">
         @if (user()?.is_authenticated) {
 
@@ -50,11 +56,23 @@
         } @else {
 
         <li class="nav-item">
-          <button class="btn btn-outline-primary w-100" routerLink="/login">Login</button>
+          <button
+            class="btn btn-outline-primary w-100"
+            routerLink="/login"
+            (click)="isMenuCollapsed.set(true)"
+          >
+            Login
+          </button>
         </li>
 
         <li class="nav-item">
-          <button class="btn btn-primary w-100" routerLink="/signup">Create Account</button>
+          <button
+            class="btn btn-primary w-100"
+            routerLink="/signup"
+            (click)="isMenuCollapsed.set(true)"
+          >
+            Create Account
+          </button>
         </li>
 
         }

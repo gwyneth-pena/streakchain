@@ -4,6 +4,7 @@
 
 .navbar-brand img {
   border-radius: 6px;
+  width: 180px;
 }
 
 .nav-link {
@@ -29,11 +30,20 @@
 
 @media screen and (max-width: 990px) {
     .btn{
-        width: 100%;
+        width: 100% !important;
         margin-top: 10px !important;
     }
 
     .navbar{
-        padding-bottom: 20px !important;
+
+        img{
+          width: 140px !important;
+        }
+
+        .navbar-toggler:focus{
+          outline: none !important;
+          border: none !important;  
+          box-shadow: none !important;
+        }
     }
 }
