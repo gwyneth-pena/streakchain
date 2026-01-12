@@ -13,7 +13,7 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: any) => {
       spinner.hide();
       if (error.status !== 401) {
-        toast.error(error?.error?.detail?.[0]?.msg || 'An unexpected error occurred.');
+        toast.error(error?.error?.detail?.[0]?.msg || 'An unexpected error occurred. Please try to refresh the page.');
       }
       if (error.status === 401) {
         userService.currentUser.set({ is_authenticated: false });
