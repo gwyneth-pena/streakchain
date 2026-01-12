@@ -30,7 +30,7 @@ describe('apiErrorInterceptor', () => {
   });
 
   it('should call toast.error when error is thrown', () => {
-    const req = new HttpRequest('GET', 'http://localhost:8000/users/create');
+    const req = new HttpRequest('GET', 'http://localhost:8000/users');
     const next = vi
       .fn()
       .mockReturnValue(throwError(() => ({ error: { detail: [{ msg: 'Invalid email' }] } })));

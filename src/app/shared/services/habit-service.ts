@@ -19,7 +19,7 @@ export class HabitService {
   }
 
   save(data: any): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/habits/create`, data, {
+    return this.http.post<any>(`${this.API_URL}/habits`, data, {
       observe: 'response',
     });
   }

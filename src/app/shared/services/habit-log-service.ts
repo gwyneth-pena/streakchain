@@ -12,7 +12,7 @@ export class HabitLogService {
   constructor(private http: HttpClient) {}
 
   save(params: { habit_id: string; log_date: string }): Observable<any> {
-    return this.http.post<Observable<any>>(`${this.apiUrl}/habit-logs/create`, params, {
+    return this.http.post<Observable<any>>(`${this.apiUrl}/habit-logs`, params, {
       observe: 'response',
     });
   }
