@@ -126,7 +126,7 @@ describe('HabitTracker', () => {
     habitTrackerCell.nativeElement.click();
     await Promise.resolve();
     fixture.detectChanges();
-    expect(component.habits()[0].logs.length).toEqual(1);
+    expect(component.habits()?.[0].logs.length).toEqual(1);
   });
 
   it('should delete habit log when clicking on a habit tracker cell', async () => {
@@ -159,7 +159,7 @@ describe('HabitTracker', () => {
       By.css('[data-testid="habit-tracker-cell"]')
     );
 
-    expect(component.habits()[0].logs.length).toEqual(1);
+    expect(component.habits()?.[0].logs.length).toEqual(1);
     expect(component.hasHabitLog(habit, '1')).toEqual(true);
 
     vi.spyOn(habitLogService, 'delete').mockReturnValue(of({ status: 200, body: {} }));
@@ -171,6 +171,6 @@ describe('HabitTracker', () => {
     fixture.detectChanges();
 
     expect(habitLogService.delete).toHaveBeenCalledWith(habit.logs[0].id);
-    expect(component.habits()[0].logs.length).toEqual(0);
+    expect(component.habits()?.[0]?.logs.length).toEqual(0);
   });
 });

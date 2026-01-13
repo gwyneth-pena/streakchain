@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { HabitLogService } from '../../shared/services/habit-log-service';
 import { SaveHabit } from './modals/save-habit/save-habit';
 import { Confirmation } from '../../shared/components/modals/confirmation/confirmation';
+import { Notes } from '../../shared/components/notes/notes';
 
 @Component({
   selector: 'app-habit-tracker',
-  imports: [NgbModule, CommonModule],
+  imports: [NgbModule, CommonModule, Notes],
   templateUrl: './habit-tracker.html',
   styleUrl: './habit-tracker.scss',
 })

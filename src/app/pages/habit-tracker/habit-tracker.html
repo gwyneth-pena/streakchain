@@ -15,7 +15,7 @@
   <div class="row mt-4 mt-md-0">
     <div class="col-md-12 d-flex justify-content-end">
       <button class="btn btn-outline-primary add-habit-btn" (click)="openSaveHabitModal()">
-        <i class="ti ti-plus"></i> Add New Habit
+        <i class="ti ti-plus"></i> Add Habit
       </button>
     </div>
   </div>
@@ -41,7 +41,7 @@
           </tr>
         </thead>
         <tbody>
-          @defer(when habits()?.length){ @for(habit of habits(); track habit.id) {
+          @for(habit of habits(); track habit.id) {
           <tr class="align-middle">
             <td
               class="habit-column pointer"
@@ -94,17 +94,26 @@
               {{ habit.frequency }}
             </td>
           </tr>
+          } @if (!habits()) {
+          <td [colSpan]="calendarDays().length + 3" class="text-center">Loading...</td>
           } @if(habits()?.length === 0) {
           <tr>
             <td [colSpan]="calendarDays().length + 3" class="text-center">
-              <i class="ti ti-sad"></i> No habits yet. Please click the button above to add one.
+              <i class="ti ti-sad"></i> No habits yet. Please click the button on the upper right to
+              add one.
             </td>
           </tr>
-          } } @placeholder {
-          <td [colSpan]="calendarDays().length + 3" class="text-center">Loading...</td>
           }
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div class="mt-5">
+    <app-notes
+      [year]="currentMonthYear.year"
+      [month]="currentMonthYear.monthNumber"
+      [numberOfDays]="currentMonthYear.numberOfDays"
+    ></app-notes>
   </div>
 </div>

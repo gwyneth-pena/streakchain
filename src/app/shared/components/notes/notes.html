@@ -1,0 +1,48 @@
+<div>
+  <h5 class="text-center">My Notes</h5>
+
+  <div class="row mt-5 mt-md-0">
+    <div class="col-md-12 d-flex justify-content-end">
+      <button class="btn btn-outline-primary add-note-btn" (click)="openSaveNoteModal()">
+        <i class="ti ti-plus"></i> Add Note
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="row note-board my-4 mx-0 d-flex flex-column align-items-center align-middle justify-content-center gap-2"
+  >
+    <div class="col-12">
+      <div class="row justify-content-center g-3">
+        @for(note of notes(); track note.id) {
+        <div class="col-md-4">
+          <div class="note">
+            <p>{{ note.text }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">{{ note.created_at | date : 'medium' }}</small>
+              <div class="d-flex">
+                <i class="ti ti-pencil me-2" (click)="openSaveNoteModal(note)"></i>
+                <i class="ti ti-trash me-2" (click)="deleteNote(note)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    @if(!notes()){
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <p class="text-center py-0 my-0 text-light">Loading...</p>
+      </div>
+    </div>
+    } @if(notes()?.length === 0) {
+    <div class="col-md-12">
+      <p class="text-center py-0 my-0 text-light">
+        No notes yet. Please click the button on the upper right to add one.
+      </p>
+    </div>
+    }
+  </div>
+</div>

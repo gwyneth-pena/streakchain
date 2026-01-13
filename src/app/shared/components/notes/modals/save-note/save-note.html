@@ -1,0 +1,38 @@
+<div class="modal-content">
+  <div class="modal-header border-0">
+    <h5 class="modal-title">@if(formModel().id) { Edit Note } @else { Create New Note }</h5>
+    <button class="btn-close" data-bs-dismiss="modal" (click)="ngbModalRef.close()"></button>
+  </div>
+
+  <div class="modal-body border-0">
+    <form>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <textarea
+              type="text"
+              class="form-control"
+              id="text"
+              placeholder="Write your note here..."
+              [field]="form.text"
+              [ngClass]="{
+                'is-invalid': form.text().invalid() && isFormSubmitted
+              }"
+              rows="8"
+            ></textarea>
+          </div>
+          @if(form.text().invalid() && isFormSubmitted) { @for(error of form.text().errors(); track
+          error.message) {
+          <small class="text-danger">
+            {{ error.message }}
+          </small>
+          } }
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer border-0 d-flex mb-2">
+    <button class="btn btn-primary flex-fill" (click)="submitForm($event)">Save</button>
+  </div>
+</div>
