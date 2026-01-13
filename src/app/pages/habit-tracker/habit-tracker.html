@@ -80,7 +80,7 @@
             <td
               class="fw-bold text-secondary frequency"
               [ngClass]="{
-                'bg-meet': habit.logs.length === habit.frequency
+                'bg-meet': habit.logs.length >= habit.frequency
               }"
             >
               {{ habit.logs.length }}
@@ -88,7 +88,7 @@
             <td
               class="fw-bold text-primary frequency"
               [ngClass]="{
-                'bg-meet': habit.logs.length === habit.frequency
+                'bg-meet': habit.logs.length >= habit.frequency
               }"
             >
               {{ habit.frequency }}
