@@ -72,7 +72,7 @@ export class Notes {
     if (res.status === 200) {
       this.toast.success('Note saved successfully!');
       if (note.id) {
-        this.notes.update((notes) => notes?.map((n: any) => (n.id === note.id ? note : n)) || []);
+        this.notes.update((notes) => notes?.map((n: any) => (n.id === note.id ? res.body : n)) || []);
       } else {
         this.notes.update((notes) => [
           ...(notes || []),

@@ -19,7 +19,7 @@
           <div class="note">
             <p>{{ note.text }}</p>
             <div class="d-flex justify-content-between align-items-center">
-              <small class="text-muted">{{ note.created_at | date : 'medium' }}</small>
+              <small class="text-muted">{{ note.updated_at | date : 'medium' }}</small>
               <div class="d-flex">
                 <i class="ti ti-pencil me-2" (click)="openSaveNoteModal(note)"></i>
                 <i class="ti ti-trash me-2" (click)="deleteNote(note)"></i>

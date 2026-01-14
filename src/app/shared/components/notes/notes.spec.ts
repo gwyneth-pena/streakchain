@@ -131,7 +131,7 @@ describe('Notes', () => {
     };
     component.notes.set([note]);
     component.openSaveNoteModal = vi.fn().mockReturnValue(Promise.resolve(true));
-    vi.spyOn(notesService, 'patch').mockReturnValue(of({ status: 200, body: {} }));
+    vi.spyOn(notesService, 'patch').mockReturnValue(of({ status: 200, body: note}));
     await component.saveNote(note);
     expect(component.notes()).toEqual([note]);
   });

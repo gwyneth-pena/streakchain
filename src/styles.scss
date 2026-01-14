@@ -1,12 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-$primary: #4e74ff;
-$secondary: #6f6362;
-$success: #3fd87e;
-$danger: #f65b53;
-$warning: #f7b84f;
-$info: #243984;
-$light: #f8f9fa;
-$dark: #343a40;
+@use '../public/styles/colors.scss' as *;
 
 $theme-colors: (
   "primary": $primary,
