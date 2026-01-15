@@ -15,7 +15,7 @@ export class Header {
   isMenuCollapsed = signal(true);
 
   constructor(private userService: UserService, private router: Router) {
-    effect(async() => {
+    effect(async () => {
       if (!this.userService.currentUser()) return;
 
       if (this.userService.currentUser().is_authenticated) {
@@ -28,6 +28,7 @@ export class Header {
     await lastValueFrom(this.userService.logout());
     this.userService.currentUser.set({ is_authenticated: false });
     this.user.set(null);
+    this.isMenuCollapsed.set(true);
     this.router.navigate(['/']);
   }
 }
