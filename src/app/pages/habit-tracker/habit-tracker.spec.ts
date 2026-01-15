@@ -2,11 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HabitTracker } from './habit-tracker';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { HabitService } from '../../shared/services/habit-service';
+import { Habit, HabitService } from '../../shared/services/habit-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { HabitLogService } from '../../shared/services/habit-log-service';
+import { HttpResponse } from '@angular/common/http';
 
 describe('HabitTracker', () => {
   let component: HabitTracker;
@@ -54,16 +55,20 @@ describe('HabitTracker', () => {
         logs: [
           {
             id: 1,
+            habit_id: 1,
             log_date: '2023-01-01',
           },
           {
             id: 2,
+            habit_id: 1,
             log_date: '2023-01-02',
           },
         ],
       },
     ];
-    vi.spyOn(habitService, 'get').mockReturnValue(of({ status: 200, body: habits }));
+    vi.spyOn(habitService, 'get').mockReturnValue(
+      of(new HttpResponse<Habit[]>({ status: 200, body: habits }))
+    );
     await component.getHabits();
     expect(component.habits()).toEqual(habits);
   });
@@ -76,7 +81,9 @@ describe('HabitTracker', () => {
       logs: [],
     };
 
-    vi.spyOn(habitService, 'save').mockReturnValue(of({ status: 200, body: habit }));
+    vi.spyOn(habitService, 'save').mockReturnValue(
+      of(new HttpResponse<Habit>({ status: 200, body: habit }))
+    );
     await component.saveHabit(habit);
     expect(component.habits()).toEqual([habit]);
     expect(toastMockService.success).toHaveBeenCalledWith('Habit saved successfully!');
@@ -92,7 +99,9 @@ describe('HabitTracker', () => {
     };
     component.habits.set([habit]);
     vi.spyOn(component, 'openDeleteHabitModal').mockReturnValue(Promise.resolve(true));
-    vi.spyOn(habitService, 'delete').mockReturnValue(of({ status: 200, body: habit }));
+    vi.spyOn(habitService, 'delete').mockReturnValue(
+      of(new HttpResponse<string>({ status: 200, body: habit.id.toString() }))
+    );
     await component.deleteHabit(habit);
     expect(component.habits()).toEqual([]);
   });
@@ -126,7 +135,7 @@ describe('HabitTracker', () => {
     habitTrackerCell.nativeElement.click();
     await Promise.resolve();
     fixture.detectChanges();
-    expect(component.habits()?.[0].logs.length).toEqual(1);
+    expect(component.habits()?.[0]?.logs?.length).toEqual(1);
   });
 
   it('should delete habit log when clicking on a habit tracker cell', async () => {
@@ -159,7 +168,7 @@ describe('HabitTracker', () => {
       By.css('[data-testid="habit-tracker-cell"]')
     );
 
-    expect(component.habits()?.[0].logs.length).toEqual(1);
+    expect(component.habits()?.[0].logs?.length).toEqual(1);
     expect(component.hasHabitLog(habit, '1')).toEqual(true);
 
     vi.spyOn(habitLogService, 'delete').mockReturnValue(of({ status: 200, body: {} }));
@@ -170,7 +179,7 @@ describe('HabitTracker', () => {
     await Promise.resolve();
     fixture.detectChanges();
 
-    expect(habitLogService.delete).toHaveBeenCalledWith(habit.logs[0].id);
-    expect(component.habits()?.[0]?.logs.length).toEqual(0);
+    expect(habitLogService.delete).toHaveBeenCalledWith(habit.logs[0].id.toString());
+    expect(component.habits()?.[0]?.logs?.length).toEqual(0);
   });
 });

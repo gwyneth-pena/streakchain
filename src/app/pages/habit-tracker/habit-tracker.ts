@@ -1,12 +1,12 @@
 import { Component, effect, signal } from '@angular/core';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HabitService } from '../../shared/services/habit-service';
+import { Habit, HabitService } from '../../shared/services/habit-service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { Meta, Title } from '@angular/platform-browser';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { HabitLogService } from '../../shared/services/habit-log-service';
+import { HabitLog, HabitLogService } from '../../shared/services/habit-log-service';
 import { SaveHabit } from './modals/save-habit/save-habit';
 import { Confirmation } from '../../shared/components/modals/confirmation/confirmation';
 import { Notes } from '../../shared/components/notes/notes';
@@ -18,8 +18,14 @@ import { Notes } from '../../shared/components/notes/notes';
   styleUrl: './habit-tracker.scss',
 })
 export class HabitTracker {
-  habits = signal<any[] | null>(null);
-  calendarDays = signal<any[]>([]);
+  habits = signal<Habit[] | null>(null);
+  calendarDays = signal<
+    {
+      day: number;
+      isToday: boolean;
+      dayName: string;
+    }[]
+  >([]);
 
   now = new Date();
 
@@ -109,7 +115,7 @@ export class HabitTracker {
     this.calendarDays.set(calendarDays);
   }
 
-  async openSaveHabitModal(habit?: any) {
+  async openSaveHabitModal(habit?: Habit) {
     const modalRef: any = this.ngbModalService.open(SaveHabit, {
       centered: true,
       size: 'md',
@@ -120,10 +126,12 @@ export class HabitTracker {
       modalRef.componentInstance.formModel.set(habit);
     }
 
-    const result = await modalRef.result;
-    if (result) {
-      this.saveHabit(result);
-    }
+    try {
+      const result = await modalRef.result;
+      if (result) {
+        this.saveHabit(result);
+      }
+    } catch (e) {}
   }
 
   async openDeleteHabitModal(habitName: string) {
@@ -140,8 +148,10 @@ export class HabitTracker {
       cancelButtonText: 'Cancel',
     });
 
-    const result = await modalRef.result;
-    return result;
+    try {
+      const result = await modalRef.result;
+      return result;
+    } catch (e) {}
   }
 
   async getHabits() {
@@ -173,7 +183,7 @@ export class HabitTracker {
       if (habit.id) {
         this.habits.update((habits) => habits?.map((h) => (h.id === habit.id ? habit : h)) || []);
       } else {
-        this.habits.update((habits) => [
+        this.habits.update((habits: any) => [
           ...(habits || []),
           {
             ...res.body,
@@ -184,11 +194,11 @@ export class HabitTracker {
     }
   }
 
-  async deleteHabit(habit: any) {
+  async deleteHabit(habit: Habit) {
     const confirmed = await this.openDeleteHabitModal(habit.name);
     if (confirmed) {
       this.spinner.show();
-      const res = await lastValueFrom(this.habitsService.delete(habit.id));
+      const res = await lastValueFrom(this.habitsService.delete(habit.id?.toString() || ''));
       this.spinner.hide();
       if (res.status === 200) {
         this.toast.success('Habit deleted successfully!');
@@ -197,11 +207,11 @@ export class HabitTracker {
     }
   }
 
-  async saveHabitLog(habit: any, day: string) {
+  async saveHabitLog(habit: Habit, day: string | number) {
     this.spinner.show();
     const res = await lastValueFrom(
       this.habitLogService.save({
-        habit_id: habit.id,
+        habit_id: habit.id?.toString() || '',
         log_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
           .toString()
           .padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
@@ -216,9 +226,9 @@ export class HabitTracker {
     }
   }
 
-  async deleteHabitLog(habitLog: any) {
+  async deleteHabitLog(habitLog: HabitLog) {
     this.spinner.show();
-    const res = await lastValueFrom(this.habitLogService.delete(habitLog.id));
+    const res = await lastValueFrom(this.habitLogService.delete(habitLog?.id?.toString() || ''));
     this.spinner.hide();
     if (res.status === 200) {
       this.habits.update(
@@ -232,7 +242,7 @@ export class HabitTracker {
     }
   }
 
-  hasHabitLog(habit: any, day: string) {
+  hasHabitLog(habit: Habit, day: number | string) {
     return habit.logs.some(
       (log: any) =>
         log.log_date ===

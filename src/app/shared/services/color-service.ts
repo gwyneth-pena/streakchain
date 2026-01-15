@@ -8,6 +8,7 @@ export class ColorService {
     hex = hex.replace('#', '');
 
     if (hex.length === 3) {
+      
       hex = hex
         .split('')
         .map((c) => c + c)

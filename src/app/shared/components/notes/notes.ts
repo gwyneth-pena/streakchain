@@ -1,5 +1,5 @@
 import { Component, effect, input, signal } from '@angular/core';
-import { NotesService } from '../../services/notes-service';
+import { Note, NotesService } from '../../services/notes-service';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +19,7 @@ export class Notes {
   year = input<number>(1990);
   numberOfDays = input<number>(30);
 
-  notes = signal<any | null>(null);
+  notes = signal<Note[] | null>(null);
 
   constructor(
     private notesService: NotesService,
@@ -46,7 +46,7 @@ export class Notes {
     }
   }
 
-  async openSaveNoteModal(note?: any) {
+  async openSaveNoteModal(note?: Note) {
     const modalRef: any = this.ngbModalService.open(SaveNote, {
       centered: true,
       size: 'md',
@@ -57,13 +57,15 @@ export class Notes {
       modalRef.componentInstance.formModel.set(note);
     }
 
-    const result = await modalRef.result;
-    if (result) {
-      this.saveNote(result);
-    }
+    try {
+      const result = await modalRef.result;
+      if (result) {
+        this.saveNote(result);
+      }
+    } catch (e) {}
   }
 
-  async saveNote(note: any) {
+  async saveNote(note: Note) {
     this.spinner.show();
     const res = await lastValueFrom(
       note?.id ? this.notesService.patch(note) : this.notesService.save(note)
@@ -72,9 +74,11 @@ export class Notes {
     if (res.status === 200) {
       this.toast.success('Note saved successfully!');
       if (note.id) {
-        this.notes.update((notes) => notes?.map((n: any) => (n.id === note.id ? res.body : n)) || []);
+        this.notes.update(
+          (notes: Note[] | null) => notes?.map((n: any) => (n?.id === note.id ? res.body : n)) || []
+        );
       } else {
-        this.notes.update((notes) => [
+        this.notes.update((notes: any) => [
           ...(notes || []),
           {
             ...res.body,
@@ -98,14 +102,17 @@ export class Notes {
       cancelButtonText: 'Cancel',
     });
 
-    const result = await modalRef.result;
-    return result;
+    try {
+      const result = await modalRef.result;
+      return result;
+    } catch (e) {}
   }
-  async deleteNote(note: any) {
-    const confirmed = await this.openDeleteNoteModal(note.text);
+
+  async deleteNote(note: Note) {
+    const confirmed = await this.openDeleteNoteModal(note.text || '');
     if (confirmed) {
       this.spinner.show();
-      const res = await lastValueFrom(this.notesService.delete(note.id));
+      const res = await lastValueFrom(this.notesService.delete(note.id?.toString() || ''));
       this.spinner.hide();
       if (res.status === 200) {
         this.toast.success('Note deleted successfully!');

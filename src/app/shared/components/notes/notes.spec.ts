@@ -2,16 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Notes } from './notes';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NotesService } from '../../services/notes-service';
+import { Note, NotesService } from '../../services/notes-service';
 import { of } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
+import { HttpResponse } from '@angular/common/http';
 
 describe('Notes', () => {
   let component: Notes;
   let fixture: ComponentFixture<Notes>;
   let notesService: NotesService;
   let toastMockService: Partial<HotToastService>;
-  
+
   toastMockService = {
     success: vi.fn(),
     error: vi.fn(),
@@ -42,25 +43,20 @@ describe('Notes', () => {
     const notes = [
       {
         id: 1,
-        title: 'Note 1',
-        content: 'Note 1 content',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        text: 'Note 1',
+        created_at: '2022-01-01T00:00:00.000Z',
+        updated_at: '2022-01-01T00:00:00.000Z',
       },
       {
         id: 2,
-        title: 'Note 2',
-        content: 'Note 2 content',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        text: 'Note 2',
+        created_at: '2022-01-01T00:00:00.000Z',
+        updated_at: '2022-01-01T00:00:00.000Z',
       },
     ];
 
     vi.spyOn(notesService, 'get').mockReturnValue(
-      of({
-        status: 200,
-        body: notes,
-      })
+      of(new HttpResponse<Note[]>({ status: 200, body: notes }))
     );
 
     fixture.componentRef.setInput('month', 1);
@@ -83,17 +79,13 @@ describe('Notes', () => {
 
   it('should save a note', async () => {
     const note = {
-      title: 'Note 1',
-      content: 'Note 1 content',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      text: 'Note 1',
+      created_at: '2022-01-01T00:00:00.000Z',
+      updated_at: '2022-01-01T00:00:00.000Z',
     };
 
     vi.spyOn(notesService, 'save').mockReturnValue(
-      of({
-        status: 200,
-        body: note,
-      })
+      of(new HttpResponse<Note>({ status: 200, body: note }))
     );
 
     component.saveNote(note);
@@ -101,22 +93,23 @@ describe('Notes', () => {
     await Promise.resolve();
 
     fixture.detectChanges();
-    
+
     expect(component.notes()).toEqual([note]);
     expect(toastMockService.success).toHaveBeenCalledWith('Note saved successfully!');
   });
 
   it('should delete a note', async () => {
     const note = {
-      id: 1,
-      title: 'Note 1',
-      content: 'Note 1 content',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      id: '1',
+      text: 'Note 1',
+      created_at: '2022-01-01T00:00:00.000Z',
+      updated_at: '2022-01-01T00:00:00.000Z',
     };
     component.notes.set([note]);
     component.openDeleteNoteModal = vi.fn().mockReturnValue(Promise.resolve(true));
-    vi.spyOn(notesService, 'delete').mockReturnValue(of({ status: 200, body: {} }));
+    vi.spyOn(notesService, 'delete').mockReturnValue(
+      of(new HttpResponse<string>({ status: 200, body: '' }))
+    );
     await component.deleteNote(note);
     expect(component.notes()).toEqual([]);
   });
@@ -124,14 +117,15 @@ describe('Notes', () => {
   it('should edit a note', async () => {
     const note = {
       id: 1,
-      title: 'Note 1',
-      content: 'Note 1 content',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      text: 'Note 1',
+      created_at: new Date().toString(),
+      updated_at: new Date().toString(),
     };
     component.notes.set([note]);
     component.openSaveNoteModal = vi.fn().mockReturnValue(Promise.resolve(true));
-    vi.spyOn(notesService, 'patch').mockReturnValue(of({ status: 200, body: note}));
+    vi.spyOn(notesService, 'patch').mockReturnValue(
+      of(new HttpResponse<Note>({ status: 200, body: note }))
+    );
     await component.saveNote(note);
     expect(component.notes()).toEqual([note]);
   });
