@@ -12,7 +12,7 @@ export class Home {
   year = new Date().getFullYear();
 
   constructor(private title: Title, private meta: Meta) {
-    this.title.setTitle('StreakChain');
+    this.title.setTitle('StreakChain - Track your daily habits with ease.');
     this.meta.addTag({
       name: 'description',
       content: 'Track your habits and unlock your productivity potential.',
