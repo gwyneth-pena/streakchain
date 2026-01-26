@@ -22,7 +22,7 @@ export const routes: Routes = [
     path: 'forgot-password-request',
     loadComponent: () =>
       import('./pages/reset-password-request/reset-password-request').then(
-        (m) => m.ResetPasswordRequest
+        (m) => m.ResetPasswordRequest,
       ),
     canActivate: [unauthGuard],
   },
@@ -37,4 +37,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/habit-tracker/habit-tracker').then((m) => m.HabitTracker),
     canActivate: [authGuard],
   },
+  {
+    path: 'yearly-streaks',
+    loadComponent: () =>
+      import('./pages/yearly-streaks/yearly-streaks').then((m) => m.YearlyStreaks),
+    canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  }
 ];

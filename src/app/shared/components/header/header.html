@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2 px-3 px-md-4">
   <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="">
       <img src="images/StreakChain.png" alt="StreakChain Logo" />
     </a>
 
@@ -22,59 +22,66 @@
     >
       <ul class="navbar-nav ms-auto mt-3 mt-lg-0 gap-2">
         @if (user()?.is_authenticated) {
+          <li class="nav-item dropdown d-none d-lg-block">
+            <a
+              class="nav-link d-flex align-items-center gap-2 fw-medium text-dark"
+              role="button"
+              data-bs-toggle="dropdown"
+            >
+              {{ user()?.firstname }} {{ user()?.lastname }}
+              <i class="ti ti-chevron-down"></i>
+            </a>
 
-        <li class="nav-item dropdown d-none d-lg-block">
-          <a
-            class="nav-link d-flex align-items-center gap-2 fw-medium text-dark"
-            role="button"
-            data-bs-toggle="dropdown"
-          >
-            {{ user()?.firstname }} {{ user()?.lastname }}
-            <i class="ti ti-chevron-down"></i>
-          </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center gap-2 pointer"
+                  routerLink="/yearly-streaks"
+                  (click)="isMenuCollapsed.set(true)"
+                >
+                  <i class="ti ti-calendar-week-filled text-primary"></i>
+                  Yearly Streaks
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2 pointer" (click)="logout()">
+                  <i class="ti ti-logout text-danger"></i>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
 
-          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-            <li>
-              <a class="dropdown-item d-flex align-items-center gap-2 pointer" (click)="logout()">
-                <i class="ti ti-logout text-danger"></i>
-                Logout
-              </a>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-item d-lg-none">
+            <button
+              class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2"
+              (click)="logout()"
+            >
+              <i class="ti ti-logout"></i>
+              Logout
+            </button>
+          </li>
+        }
+        @if (user() === null) {
+          <li class="nav-item">
+            <button
+              class="btn btn-outline-primary w-100"
+              routerLink="/login"
+              (click)="isMenuCollapsed.set(true)"
+            >
+              Login
+            </button>
+          </li>
 
-        <li class="nav-item d-lg-none">
-          <button
-            class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2"
-            (click)="logout()"
-          >
-            <i class="ti ti-logout"></i>
-            Logout
-          </button>
-        </li>
-
-        } @if (user() === null) {
-
-        <li class="nav-item">
-          <button
-            class="btn btn-outline-primary w-100"
-            routerLink="/login"
-            (click)="isMenuCollapsed.set(true)"
-          >
-            Login
-          </button>
-        </li>
-
-        <li class="nav-item">
-          <button
-            class="btn btn-primary w-100"
-            routerLink="/signup"
-            (click)="isMenuCollapsed.set(true)"
-          >
-            Create Account
-          </button>
-        </li>
-
+          <li class="nav-item">
+            <button
+              class="btn btn-primary w-100"
+              routerLink="/signup"
+              (click)="isMenuCollapsed.set(true)"
+            >
+              Create Account
+            </button>
+          </li>
         }
       </ul>
     </div>

@@ -6,32 +6,6 @@
     padding-right: 3rem;
   }
 
-  .table {
-    font-size: 12px;
-  }
-
-  .today-column {
-    background-color: rgba(13, 110, 253, 0.1);
-    color: #0d6efd;
-  }
-
-  .habit-column {
-    width: 150px;    
-    max-width: 150px;
-    min-width: 150px;
-  }
-
-  .habit-options {
-    font-size: 16px;
-    color: #6f6362;
-    display: none;
-  }
-
-  tr:hover .habit-options,
-  td.habit-column:hover .habit-options {
-    display: inline-block;
-  }
-
   .add-habit-btn {
     font-size: 12px;
   }
@@ -91,9 +65,37 @@
       text-align: center;
       color: #6f6362;
     }
+
+    .table {
+      font-size: 12px;
+    }
+
+    .today-column {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+    }
+
+    .habit-column {
+      width: 150px;    
+      max-width: 150px;
+      min-width: 150px;
+    }
+
+    .habit-options {
+      font-size: 16px;
+      color: #6f6362;
+      display: none;
+    }
+
+    tr:hover .habit-options,
+    td.habit-column:hover .habit-options {
+      display: inline-block;
+    }
+
+
+    .bg-meet{
+      background-color: #aee6bd
+    }
   }
 
-  .bg-meet{
-    background-color: #aee6bd
-  }
 }

@@ -60,7 +60,7 @@ export class HabitTracker {
     private toast: HotToastService,
     private spinner: NgxSpinnerService,
     private title: Title,
-    private meta: Meta
+    private meta: Meta,
   ) {
     this.title.setTitle('Habit Tracker | StreakChain');
     this.meta.addTag({ name: 'description', content: 'Track your habits.' });
@@ -76,7 +76,7 @@ export class HabitTracker {
     const newDate = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() + monthIncrement,
-      currentDate.getDate()
+      currentDate.getDate(),
     );
     const numberOfDays = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
     this.currentMonthYear = {
@@ -164,7 +164,7 @@ export class HabitTracker {
         end_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
           .toString()
           .padStart(2, '0')}-${this.currentMonthYear.numberOfDays.toString().padStart(2, '0')}`,
-      })
+      }),
     );
     this.spinner.hide();
     if (res.status === 200) {
@@ -175,7 +175,7 @@ export class HabitTracker {
   async saveHabit(habit: any) {
     this.spinner.show();
     const res = await lastValueFrom(
-      habit.id ? this.habitsService.update(habit) : this.habitsService.save(habit)
+      habit.id ? this.habitsService.update(habit) : this.habitsService.save(habit),
     );
     this.spinner.hide();
     if (res.status === 200) {
@@ -215,13 +215,15 @@ export class HabitTracker {
         log_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
           .toString()
           .padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
-      })
+      }),
     );
     this.spinner.hide();
     if (res.status === 200) {
       this.habits.update(
         (habits) =>
-          habits?.map((h) => (h.id === habit.id ? { ...h, logs: [...h.logs, res.body] } : h)) || []
+          habits?.map((h) =>
+            h.id === habit.id ? { ...h, logs: [...(h?.logs || []), res.body] } : h,
+          ) || [],
       );
     }
   }
@@ -235,20 +237,20 @@ export class HabitTracker {
         (habits) =>
           habits?.map((h) =>
             h.id === habitLog.habit_id
-              ? { ...h, logs: h.logs.filter((log: any) => log.id !== habitLog.id) }
-              : h
-          ) || []
+              ? { ...h, logs: h.logs?.filter((log: any) => log.id !== habitLog.id) }
+              : h,
+          ) || [],
       );
     }
   }
 
   hasHabitLog(habit: Habit, day: number | string) {
-    return habit.logs.some(
+    return habit.logs?.some(
       (log: any) =>
         log.log_date ===
         `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
           .toString()
-          .padStart(2, '0')}-${day.toString().padStart(2, '0')}`
+          .padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
     );
   }
 

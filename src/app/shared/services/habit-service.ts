@@ -9,7 +9,7 @@ export interface Habit {
   name: string;
   frequency: number;
   color: string;
-  logs: HabitLog[];
+  logs?: HabitLog[];
   created_at?: string;
   updated_at?: string;
 }

@@ -26,83 +26,85 @@
         <thead>
           <tr>
             <th class="habit-column">Habits</th>
-            @for(day of calendarDays(); track day.day + '-' + currentMonthYear.monthNumber) {
-            <th [ngClass]="{ 'today-column': day.isToday }">
-              <div>
-                <span class="fw-bold" [ngClass]="{ 'text-primary': day.isToday }">
-                  {{ day.day }}
-                </span>
-                <span class="text-muted">{{ day.dayName }}</span>
-              </div>
-            </th>
+            @for (day of calendarDays(); track day.day + '-' + currentMonthYear.monthNumber) {
+              <th [ngClass]="{ 'today-column': day.isToday }">
+                <div>
+                  <span class="fw-bold" [ngClass]="{ 'text-primary': day.isToday }">
+                    {{ day.day }}
+                  </span>
+                  <span class="text-muted">{{ day.dayName }}</span>
+                </div>
+              </th>
             }
             <th>Achieved</th>
             <th>Goal</th>
           </tr>
         </thead>
         <tbody>
-          @for(habit of habits(); track habit.id) {
-          <tr class="align-middle">
-            <td
-              class="habit-column pointer"
-              [ngStyle]="{
-                borderRight: '5px solid ' + habit.color
-              }"
-            >
-              {{ habit.name }}
-              <br />
-              <div class="habit-options">
-                <i (click)="openSaveHabitModal(habit)" class="ti ti-pencil me-2 pointer"></i>
-                <i (click)="deleteHabit(habit)" class="ti ti-trash me-2 pointer"></i>
-              </div>
-            </td>
-            @for(day of calendarDays(); track day.day) {
-            <td
-              data-testid="habit-tracker-cell"
-              [ngClass]="{ 'today-column': day.isToday }"
-              class="pointer"
-              (click)="
-                hasHabitLog(habit, day.day)
-                  ? deleteHabitLog(getHabitLogForDay(habit, day.day))
-                  : saveHabitLog(habit, day.day)
-              "
-            >
-              @if(hasHabitLog(habit, day.day)) {
-              <i
-                class="ti ti-star-filled frequency-icon my-0 py-0"
+          @for (habit of habits(); track habit.id) {
+            <tr class="align-middle">
+              <td
+                class="habit-column pointer"
                 [ngStyle]="{
-                  color: habit.color
+                  borderRight: '5px solid ' + habit.color,
                 }"
-              ></i>
+              >
+                {{ habit.name }}
+                <br />
+                <div class="habit-options">
+                  <i (click)="openSaveHabitModal(habit)" class="ti ti-pencil me-2 pointer"></i>
+                  <i (click)="deleteHabit(habit)" class="ti ti-trash me-2 pointer"></i>
+                </div>
+              </td>
+              @for (day of calendarDays(); track day.day) {
+                <td
+                  data-testid="habit-tracker-cell"
+                  [ngClass]="{ 'today-column': day.isToday }"
+                  class="pointer"
+                  (click)="
+                    hasHabitLog(habit, day.day)
+                      ? deleteHabitLog(getHabitLogForDay(habit, day.day))
+                      : saveHabitLog(habit, day.day)
+                  "
+                >
+                  @if (hasHabitLog(habit, day.day)) {
+                    <i
+                      class="ti ti-star-filled frequency-icon my-0 py-0"
+                      [ngStyle]="{
+                        color: habit.color,
+                      }"
+                    ></i>
+                  }
+                </td>
               }
-            </td>
-            }
-            <td
-              class="fw-bold text-secondary frequency"
-              [ngClass]="{
-                'bg-meet': habit.logs.length >= habit.frequency
-              }"
-            >
-              {{ habit.logs.length }}
-            </td>
-            <td
-              class="fw-bold text-primary frequency"
-              [ngClass]="{
-                'bg-meet': habit.logs.length >= habit.frequency
-              }"
-            >
-              {{ habit.frequency }}
-            </td>
-          </tr>
-          } @if (!habits()) {
-          <td [colSpan]="calendarDays().length + 3" class="text-center">Loading...</td>
-          } @if(habits()?.length === 0) {
-          <tr>
-            <td [colSpan]="calendarDays().length + 3" class="text-center">
-              <i class="ti ti-sad"></i> No habits yet. Please click the button on the upper right to
-              add one.
-            </td>
-          </tr>
+              <td
+                class="fw-bold text-secondary frequency"
+                [ngClass]="{
+                  'bg-meet': habit.logs && habit.logs.length >= habit.frequency,
+                }"
+              >
+                {{ habit.logs?.length }}
+              </td>
+              <td
+                class="fw-bold text-primary frequency"
+                [ngClass]="{
+                  'bg-meet': habit.logs && habit.logs.length >= habit.frequency,
+                }"
+              >
+                {{ habit.frequency }}
+              </td>
+            </tr>
+          }
+          @if (!habits()) {
+            <td [colSpan]="calendarDays().length + 3" class="text-center">Loading...</td>
+          }
+          @if (habits()?.length === 0) {
+            <tr>
+              <td [colSpan]="calendarDays().length + 3" class="text-center">
+                <i class="ti ti-sad"></i> No habits yet. Please click the button on the upper right
+                to add one.
+              </td>
+            </tr>
           }
         </tbody>
       </table>
