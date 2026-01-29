@@ -1,8 +1,42 @@
-.table {
-    font-size: 13px;
-}
+  .calendar-table {
+    margin-top: 1.5rem;
 
-tr:hover .habit-options,
-  td.habit-column:hover .habit-options {
-    display: inline-block;
-}
+    th,
+    td {
+      text-align: center;
+    }
+
+    th > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .fw-bold {
+        font-weight: 600;
+      }
+
+      .text-muted {
+        font-size: 0.75rem;
+      }
+    }
+
+    .habit-column {
+      width: 150px;    
+      max-width: 150px;
+      min-width: 150px;
+    }
+
+
+    .no-habits {
+      text-align: center;
+      color: #6f6362;
+    }
+
+    .log-nums{
+      font-size: 14px;
+    }
+
+    .table{
+      font-size: 12px;
+    }
+  }

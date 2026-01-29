@@ -73,11 +73,7 @@ export class HabitTracker {
 
   getNewCurrentMonthYear(monthIncrement: number) {
     const currentDate = this.currentMonthYear.date;
-    const newDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() + monthIncrement,
-      currentDate.getDate(),
-    );
+    const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + monthIncrement, 1);
     const numberOfDays = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
     this.currentMonthYear = {
       month: newDate.toLocaleString('default', { month: 'long' }),

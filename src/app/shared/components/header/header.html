@@ -36,10 +36,18 @@
               <li>
                 <a
                   class="dropdown-item d-flex align-items-center gap-2 pointer"
+                  routerLink="/habit-tracker"
+                  (click)="isMenuCollapsed.set(true)"
+                >
+                  <i class="ti ti-chart-dots-2 text-primary"></i>
+                  Habit Tracker
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center gap-2 pointer"
                   routerLink="/yearly-streaks"
                   (click)="isMenuCollapsed.set(true)"
                 >
-                  <i class="ti ti-calendar-week-filled text-primary"></i>
+                  <i class="ti ti-calendar-week-filled text-secondary"></i>
                   Yearly Streaks
                 </a>
               </li>
@@ -55,10 +63,18 @@
           <li class="nav-item d-lg-none">
             <a
               class="d-flex align-items-center pointer text-decoration-none text-secondary"
+              routerLink="/habit-tracker"
+              (click)="isMenuCollapsed.set(true)"
+            >
+              <i class="ti ti-chart-dots-2 text-primary me-2"></i>
+              Habit Tracker
+            </a>
+            <a
+              class="d-flex align-items-center pointer text-decoration-none text-secondary mt-2"
               routerLink="/yearly-streaks"
               (click)="isMenuCollapsed.set(true)"
             >
-              <i class="ti ti-calendar-week-filled text-primary me-2"></i>
+              <i class="ti ti-calendar-week-filled text-secondary me-2"></i>
               Yearly Streaks
             </a>
             <a

@@ -1,4 +1,6 @@
-<div class="container-fluid p-5 d-flex justify-content-center flex-column align-items-center">
+<div
+  class="container-fluid px-3 py-5 p-md-5 d-flex justify-content-center flex-column align-items-center"
+>
   <h4 class="text-center pb-2">Yearly Streaks</h4>
   <div class="row mt-3">
     <div class="col-md-12">
@@ -14,55 +16,57 @@
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col-md-12 table-responsive">
-      <table class="table table-hover table-bordered">
-        <thead>
-          <tr>
-            <th class="habit-column">Habits</th>
-            @for (month of monthEntries; track month[0]) {
-              <th>
-                {{ month[1] }}
-              </th>
-            }
-          </tr>
-        </thead>
-        <tbody>
-          @for (habit of habits(); track habit.id) {
-            <tr class="align-middle">
-              <td
-                class="habit-column pointer"
-                [ngStyle]="{
-                  borderRight: '5px solid ' + habit.color,
-                }"
-              >
-                {{ habit.name }}
-                <br />
-              </td>
-              @for (month of monthEntries; track monthEntries[0]) {
-                <td
-                  class="pointer text-center fw-bold"
-                  [ngStyle]="{
-                    color: habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.habit_color,
-                  }"
-                >
-                  {{ habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.logs_count || 0 }}
-                </td>
+  <div class="row mt-4 w-100 calendar-table">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th class="habit-column">Habits</th>
+              @for (month of monthEntries; track month[0]) {
+                <th>
+                  {{ month[1] }}
+                </th>
               }
             </tr>
-          }
-          @if (!habits()) {
-            <td [colSpan]="monthEntries.length + 1" class="text-center">Loading...</td>
-          }
-          @if (habits()?.length === 0) {
-            <tr>
-              <td [colSpan]="monthEntries.length + 1" class="text-center">
-                <i class="ti ti-sad"></i> No habits yet.
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            @for (habit of habits(); track habit.id) {
+              <tr class="align-middle">
+                <td
+                  class="habit-column pointer"
+                  [ngStyle]="{
+                    borderRight: '5px solid ' + habit.color,
+                  }"
+                >
+                  {{ habit.name }}
+                  <br />
+                </td>
+                @for (month of monthEntries; track monthEntries[0]) {
+                  <td
+                    class="pointer text-center fw-bold log-nums"
+                    [ngStyle]="{
+                      color: habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.habit_color,
+                    }"
+                  >
+                    {{ habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.logs_count || 0 }}
+                  </td>
+                }
+              </tr>
+            }
+            @if (!habits()) {
+              <td [colSpan]="monthEntries.length + 1" class="text-center">Loading...</td>
+            }
+            @if (habits()?.length === 0) {
+              <tr>
+                <td [colSpan]="monthEntries.length + 1" class="text-center">
+                  <i class="ti ti-sad"></i> No habits yet.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
