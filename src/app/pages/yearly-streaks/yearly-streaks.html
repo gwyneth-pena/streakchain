@@ -28,6 +28,7 @@
                   {{ month[1] }}
                 </th>
               }
+              <th>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -52,14 +53,17 @@
                     {{ habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.logs_count || 0 }}
                   </td>
                 }
+                <td class="total-logs text-primary">
+                  {{ habitLogsByYear()?.[currentYear()]?.[habit?.id || '']?.logs_count || 0 }}
+                </td>
               </tr>
             }
             @if (!habits()) {
-              <td [colSpan]="monthEntries.length + 1" class="text-center">Loading...</td>
+              <td [colSpan]="monthEntries.length + 2" class="text-center">Loading...</td>
             }
             @if (habits()?.length === 0) {
               <tr>
-                <td [colSpan]="monthEntries.length + 1" class="text-center">
+                <td [colSpan]="monthEntries.length + 2" class="text-center">
                   <i class="ti ti-sad"></i> No habits yet.
                 </td>
               </tr>
