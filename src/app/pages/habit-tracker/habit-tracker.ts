@@ -154,10 +154,10 @@ export class HabitTracker {
     this.spinner.show();
     const res = await lastValueFrom(
       this.habitsService.get({
-        start_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
+        log_start_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
           .toString()
           .padStart(2, '0')}-01`,
-        end_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
+        log_end_date: `${this.currentMonthYear.year}-${this.currentMonthYear.monthNumber
           .toString()
           .padStart(2, '0')}-${this.currentMonthYear.numberOfDays.toString().padStart(2, '0')}`,
       }),
