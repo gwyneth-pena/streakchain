@@ -79,7 +79,7 @@ footer {
   }
 }
 
-@media (min-width: 768px){
+@media (max-width: 768px){
   footer {
     .contact-info a {
       font-size: 14px;
