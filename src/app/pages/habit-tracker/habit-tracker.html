@@ -14,6 +14,11 @@
   </div>
   <div class="row mt-4 mt-md-0">
     <div class="col-md-12 d-flex justify-content-end">
+      @if (habits()?.length !== 0) {
+        <button class="btn btn-outline-secondary download-btn me-2" (click)="downloadHabits()">
+          <i class="ti ti-file-download"></i> Download
+        </button>
+      }
       <button class="btn btn-outline-primary add-habit-btn" (click)="openSaveHabitModal()">
         <i class="ti ti-plus"></i> Add Habit
       </button>

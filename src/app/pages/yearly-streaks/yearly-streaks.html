@@ -16,6 +16,19 @@
     </div>
   </div>
 
+  @if (habits()?.length !== 0) {
+    <div class="row mt-4 mt-md-0 w-100">
+      <div class="col-md-12 d-flex justify-content-end">
+        <button
+          class="btn btn-outline-secondary download-btn me-2"
+          (click)="downloadYearlyStreaks()"
+        >
+          <i class="ti ti-file-download"></i> Download
+        </button>
+      </div>
+    </div>
+  }
+
   <div class="row mt-4 w-100 calendar-table">
     <div class="col-md-12">
       <div class="table-responsive">

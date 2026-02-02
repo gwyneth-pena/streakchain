@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -36,15 +36,24 @@ export class HabitLogService {
     });
   }
 
+  downloadYearlyStreaks(params: { year: number }): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.apiUrl}/habit-logs/download-yearly-streaks`, {
+      observe: 'response',
+      responseType: 'blob',
+      params,
+    });
+  }
+
   delete(habitLogId: string): Observable<any> {
     return this.http.delete<Observable<any>>(`${this.apiUrl}/habit-logs/${habitLogId}`, {
       observe: 'response',
     });
   }
 
-  get(year: number): Observable<any> {
-    return this.http.get<Observable<HabitLogsPerYear>>(`${this.apiUrl}/habit-logs/${year}`, {
+  get(params: { year: number }): Observable<any> {
+    return this.http.get<Observable<HabitLogsPerYear>>(`${this.apiUrl}/habit-logs`, {
       observe: 'response',
+      params,
     });
   }
 }

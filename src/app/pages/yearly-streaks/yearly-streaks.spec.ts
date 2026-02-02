@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { YearlyStreaks } from './yearly-streaks';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('YearlyStreaks', () => {
   let component: YearlyStreaks;
@@ -8,7 +9,7 @@ describe('YearlyStreaks', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [YearlyStreaks]
+      imports: [YearlyStreaks, HttpClientTestingModule],
     })
     .compileComponents();
 

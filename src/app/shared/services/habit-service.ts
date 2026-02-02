@@ -29,6 +29,14 @@ export class HabitService {
     });
   }
 
+  downloadStreaks(params: { year: number; month?: number }): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.API_URL}/habits/download-streaks`, {
+      observe: 'response',
+      responseType: 'blob',
+      params,
+    });
+  }
+
   save(data: any): Observable<HttpResponse<Habit>> {
     return this.http.post<Habit>(`${this.API_URL}/habits`, data, {
       observe: 'response',

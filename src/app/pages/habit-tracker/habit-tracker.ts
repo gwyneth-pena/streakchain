@@ -253,4 +253,33 @@ export class HabitTracker {
   getHabitLogForDay(habit: any, day: number) {
     return habit.logs.find((log: any) => log.log_date.split('-')[2] == day);
   }
+
+  async downloadHabits() {
+    const res = await lastValueFrom(
+      this.habitsService.downloadStreaks({
+        month: this.currentMonthYear.monthNumber,
+        year: this.currentMonthYear.year,
+      }),
+    );
+
+    if (res.status === 200) {
+      const contentDisposition = res.headers.get('content-disposition') || '';
+
+      let filename = 'download.csv';
+
+      const matches = /filename="(.+)"/.exec(contentDisposition);
+      if (matches && matches[1]) {
+        filename = matches[1];
+      }
+
+      const url = window.URL.createObjectURL(res.body || new Blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      this.toast.success('Habits with their respective logs are downloaded successfully!');
+    }
+  }
 }

@@ -5,6 +5,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-yearly-streaks',
@@ -38,6 +39,7 @@ export class YearlyStreaks {
     private title: Title,
     private meta: Meta,
     private spinner: NgxSpinnerService,
+    private toast: HotToastService,
   ) {
     this.title.setTitle('Yearly Streaks | StreakChain');
     this.meta.addTag({ name: 'description', content: 'Check your yearly streaks.' });
@@ -68,10 +70,44 @@ export class YearlyStreaks {
 
   async getHabitLogsByYear() {
     this.spinner.show();
-    const res = await lastValueFrom(this.habitLogService.get(this.currentYear()));
+    const res = await lastValueFrom(
+      this.habitLogService.get({
+        year: this.currentYear(),
+      }),
+    );
     this.spinner.hide();
     if (res.status === 200) {
       this.habitLogsByYear.set(res.body || {});
+    }
+  }
+
+  async downloadYearlyStreaks() {
+    const res = await lastValueFrom(
+      this.habitLogService.downloadYearlyStreaks({
+        year: this.currentYear(),
+      }),
+    );
+
+    if (res.status === 200) {
+      const contentDisposition = res.headers.get('content-disposition') || '';
+
+      let filename = 'download.csv';
+
+      const matches = /filename="(.+)"/.exec(contentDisposition);
+      if (matches && matches[1]) {
+        filename = matches[1];
+      }
+
+      const url = window.URL.createObjectURL(res.body || new Blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      this.toast.success(
+        `Yearly streaks for year ${this.currentYear()} are downloaded successfully!`,
+      );
     }
   }
 }
