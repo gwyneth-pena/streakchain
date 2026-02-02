@@ -78,3 +78,11 @@ footer {
     line-height: 1.6;
   }
 }
+
+@media (min-width: 768px){
+  footer {
+    .contact-info a {
+      font-size: 14px;
+    }
+  }
+}
