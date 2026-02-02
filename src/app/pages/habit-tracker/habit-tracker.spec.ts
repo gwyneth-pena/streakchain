@@ -182,4 +182,16 @@ describe('HabitTracker', () => {
     expect(habitLogService.delete).toHaveBeenCalledWith(habit.logs[0].id.toString());
     expect(component.habits()?.[0]?.logs?.length).toEqual(0);
   });
+
+
+  it('should download habits', async () => {
+    vi.spyOn(habitService, 'downloadStreaks').mockReturnValue(
+      of(new HttpResponse<Blob>({ status: 200, body: new Blob() })),
+    );
+    await component.downloadHabits();
+    expect(habitService.downloadStreaks).toHaveBeenCalledWith({
+      month: component.currentMonthYear.monthNumber,
+      year: component.currentMonthYear.year,
+    });
+  });
 });
