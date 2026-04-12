@@ -18,20 +18,23 @@ export class NotesService {
 
   constructor(private http: HttpClient) {}
 
-  get(params: any = {}): Observable<HttpResponse<Note[]>> {
+  get(params?:{
+    start_date?: string;
+    end_date?: string;
+  }): Observable<HttpResponse<Note[]>> {
     return this.http.get<[Note]>(`${this.API_URL}/notes`, {
       observe: 'response',
       params: params,
     });
   }
 
-  save(data: any): Observable<HttpResponse<Note>> {
+  save(data: Note): Observable<HttpResponse<Note>> {
     return this.http.post<Note>(`${this.API_URL}/notes`, data, {
       observe: 'response',
     });
   }
 
-  patch(data: any): Observable<HttpResponse<Note>> {
+  patch(data: Note): Observable<HttpResponse<Note>> {
     return this.http.patch<Note>(`${this.API_URL}/notes/${data.id}`, data, {
       observe: 'response',
     });

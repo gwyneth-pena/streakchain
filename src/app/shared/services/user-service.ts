@@ -3,6 +3,25 @@ import { Injectable, signal } from '@angular/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+
+export interface SignupData {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  method?: string;
+  identifier?: string;
+  token?: string;
+}
+
+export interface SignInData {
+  identifier: string;
+  password: string;
+  method?: string;
+  token?: string;
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,25 +32,30 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  signUp(data: any): Observable<any> {
+  signUp(data: SignupData): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/users`, data, {
       observe: 'response',
     });
   }
 
-  signIn(data: any): Observable<any> {
+  signIn(data: SignInData): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/users/login`, data, {
       observe: 'response',
     });
   }
 
-  requestPasswordReset(data: any): Observable<any> {
+  requestPasswordReset(data: {
+    email: string;
+  }): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/users/request-password-reset`, data, {
       observe: 'response',
     });
   }
 
-  resetPassword(data: any): Observable<any> {
+  resetPassword(data: {
+    token: string;
+    new_password: string;
+  }): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/users/reset-password`, data, {
       observe: 'response',
     });

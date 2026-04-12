@@ -1,6 +1,6 @@
 import { Component, effect, signal } from '@angular/core';
 import { email, Field, form, minLength, required } from '@angular/forms/signals';
-import { UserService } from '../../shared/services/user-service';
+import { SignupData, UserService } from '../../shared/services/user-service';
 import { CommonModule } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
@@ -8,16 +8,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Meta, Title } from '@angular/platform-browser';
 import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-
-interface SignupData {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  method?: string;
-  identifier?: string;
-  token?: string;
-}
 
 @Component({
   selector: 'app-signup',

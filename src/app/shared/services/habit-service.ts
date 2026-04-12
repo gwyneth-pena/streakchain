@@ -22,7 +22,10 @@ export class HabitService {
 
   constructor(private http: HttpClient) {}
 
-  get(params: any = {}): Observable<HttpResponse<Habit[]>> {
+  get(params?: {
+    log_start_date?: string;
+    log_end_date?: string;
+  }): Observable<HttpResponse<Habit[]>> {
     return this.http.get<Habit[]>(`${this.API_URL}/habits`, {
       observe: 'response',
       params: params,
