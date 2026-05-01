@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 export interface Note {
   id?: string | number;
   text: string | null | undefined;
+  month?: number;
+  year?: number;
   created_at?: string;
   updated_at?: string;
 }

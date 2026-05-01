@@ -7,6 +7,8 @@ interface NotesData {
   id: string;
   text: string;
   created_at: string;
+  month: number;
+  year: number;
 }
 
 @Component({
@@ -20,6 +22,8 @@ export class SaveNote {
     id: '',
     text: '',
     created_at: '',
+    month: 1,
+    year: 1990,
   };
 
   formModel = signal<NotesData>(this.initialFormModel);

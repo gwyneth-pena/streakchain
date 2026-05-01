@@ -55,6 +55,12 @@ export class Notes {
 
     if (note) {
       modalRef.componentInstance.formModel.set(note);
+    }else{
+      modalRef.componentInstance.formModel.set({
+        ...modalRef.componentInstance.formModel(),
+        month: this.month(),
+        year: this.year(),
+      });
     }
 
     try {
