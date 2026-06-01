@@ -64,7 +64,7 @@ describe('YearlyStreaks', () => {
     expect(component.habitLogsByYear()).toEqual(habitLogs);
   });
 
-  it('should download yearly streaks', async () => {
+  it('should download Annual Logs', async () => {
     vi.spyOn(habitLogService, 'downloadYearlyStreaks').mockReturnValue(
       of(new HttpResponse<Blob>({ status: 200, body: new Blob() })),
     );

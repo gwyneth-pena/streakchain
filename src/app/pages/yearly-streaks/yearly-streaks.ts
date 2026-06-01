@@ -41,8 +41,8 @@ export class YearlyStreaks {
     private spinner: NgxSpinnerService,
     private toast: HotToastService,
   ) {
-    this.title.setTitle('Yearly Streaks | StreakChain');
-    this.meta.addTag({ name: 'description', content: 'Check your yearly streaks.' });
+    this.title.setTitle('Annual Logs | StreakChain');
+    this.meta.addTag({ name: 'description', content: 'Check your Annual Logs.' });
 
     effect(() => {
       if (this.habits()) {
@@ -106,7 +106,7 @@ export class YearlyStreaks {
       window.URL.revokeObjectURL(url);
 
       this.toast.success(
-        `Yearly streaks for year ${this.currentYear()} are downloaded successfully!`,
+        `Annual Logs for year ${this.currentYear()} are downloaded successfully!`,
       );
     }
   }
