@@ -7,6 +7,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from '../../shared/services/user-service';
 import { lastValueFrom } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-reset-password',
@@ -43,6 +44,8 @@ export class ResetPassword {
 
   token: string = '';
 
+  appName = environment.APP_NAME;
+
   constructor(
     private title: Title,
     private meta: Meta,
@@ -52,7 +55,7 @@ export class ResetPassword {
     private spinner: NgxSpinnerService,
     private toast: HotToastService
   ) {
-    this.title.setTitle('Reset Password | StreakChain');
+    this.title.setTitle(`Reset Password | ${this.appName}`);
     this.meta.addTag({
       name: 'description',
       content: 'Reset your password to regain access to your account.',

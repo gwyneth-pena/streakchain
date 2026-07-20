@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Meta, Title } from '@angular/platform-browser';
 import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -43,6 +44,8 @@ export class Signup {
 
   isFormSubmitted: boolean = false;
   isGooglePromptOpen = false;
+  appName = environment.APP_NAME;
+
 
   constructor(
     private userService: UserService,
@@ -52,7 +55,7 @@ export class Signup {
     private meta: Meta,
     private router: Router
   ) {
-    this.title.setTitle('Sign Up | StreakChain');
+    this.title.setTitle(`Sign Up | ${this.appName}`);
     this.meta.addTag({ name: 'description', content: 'Sign up to start tracking your habits.' });
 
     effect(() => {

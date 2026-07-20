@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { GoogleSignInButton } from '../../shared/components/google-sign-in-button/google-sign-in-button';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ export class Login {
   });
 
   isFormSubmitted: boolean = false;
+  appName = environment.APP_NAME;
 
   constructor(
     private title: Title,
@@ -43,7 +45,7 @@ export class Login {
     private spinner: NgxSpinnerService,
     private router: Router
   ) {
-    this.title.setTitle('Login | StreakChain');
+    this.title.setTitle(`Login | ${this.appName}`);
     this.meta.addTag({ name: 'description', content: 'Sign in to your account.' });
   }
 

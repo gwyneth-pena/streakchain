@@ -1,0 +1,44 @@
+<div
+  class="container-fluid px-2 py-5 p-md-5 d-flex justify-content-center flex-column align-items-center"
+>
+  <h4 class="text-center pb-2">Your Habit Analytics - as of {{ date_today | date }}</h4>
+
+  <div class="row w-100 mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Habits Tracked</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="fw-bold text-center">
+                            {{ habits()?.length }}
+                        </h2>
+                    </div>
+                    <div class="col-12">
+                        @for (habit of habits(); track $index) {
+                            <div class="d-flex align-items-start">
+                                <span
+                                    class="color-box"
+                                    [ngStyle]="
+                                        {
+                                            color: habit.color,
+                                            backgroundColor: habit.color
+                                        }
+                                    "
+                                >
+
+                                </span>
+                                <span class="ms-3">
+                                    {{ habit.name }}    
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

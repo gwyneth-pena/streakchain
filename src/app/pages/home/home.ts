@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,10 @@ import { RouterModule } from '@angular/router';
 })
 export class Home {
   year = new Date().getFullYear();
+  appName = environment.APP_NAME;
 
   constructor(private title: Title, private meta: Meta) {
-    this.title.setTitle('StreakChain - Track your daily habits with ease.');
+    this.title.setTitle(`${this.appName} - Track your daily habits with ease.`);
     this.meta.addTag({
       name: 'description',
       content: 'Track your habits and unlock your productivity potential.',

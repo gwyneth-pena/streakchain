@@ -10,6 +10,7 @@ import { HabitLog, HabitLogService } from '../../shared/services/habit-log-servi
 import { SaveHabit } from './modals/save-habit/save-habit';
 import { Confirmation } from '../../shared/components/modals/confirmation/confirmation';
 import { Notes } from '../../shared/components/notes/notes';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-habit-tracker',
@@ -52,6 +53,7 @@ export class HabitTracker {
     5: 'Fri',
     6: 'Sat',
   };
+  appName = environment.APP_NAME;
 
   constructor(
     private ngbModalService: NgbModal,
@@ -62,7 +64,7 @@ export class HabitTracker {
     private title: Title,
     private meta: Meta,
   ) {
-    this.title.setTitle('Habit Tracker | StreakChain');
+    this.title.setTitle(`Habit Tracker | ${this.appName}`);
     this.meta.addTag({ name: 'description', content: 'Track your habits.' });
 
     effect(() => {

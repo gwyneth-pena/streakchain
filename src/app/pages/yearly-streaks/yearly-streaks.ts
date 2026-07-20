@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { HotToastService } from '@ngxpert/hot-toast';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-yearly-streaks',
@@ -32,6 +33,7 @@ export class YearlyStreaks {
   monthEntries = Object.entries(this.months);
   habits = signal<Habit[] | null>(null);
   habitLogsByYear = signal<HabitLogsPerYear | null>({});
+  appName = environment.APP_NAME;
 
   constructor(
     private habitLogService: HabitLogService,
@@ -41,7 +43,7 @@ export class YearlyStreaks {
     private spinner: NgxSpinnerService,
     private toast: HotToastService,
   ) {
-    this.title.setTitle('Annual Logs | StreakChain');
+    this.title.setTitle(`Annual Logs | ${this.appName}`);
     this.meta.addTag({ name: 'description', content: 'Check your Annual Logs.' });
 
     effect(() => {

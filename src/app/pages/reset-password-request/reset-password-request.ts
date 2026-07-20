@@ -7,6 +7,7 @@ import { UserService } from '../../shared/services/user-service';
 import { lastValueFrom } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-reset-password-request',
@@ -27,6 +28,7 @@ export class ResetPasswordRequest {
   });
 
   isFormSubmitted: boolean = false;
+  appName = environment.APP_NAME;
 
   constructor(
     private title: Title,
@@ -35,7 +37,7 @@ export class ResetPasswordRequest {
     private userService: UserService,
     private toast: HotToastService
   ) {
-    this.title.setTitle('Reset Password | StreakChain');
+    this.title.setTitle(`Reset Password | ${this.appName}`);
     this.meta.addTag({
       name: 'description',
       content: 'Reset your password to regain access to your account.',
