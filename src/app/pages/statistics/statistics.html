@@ -1,106 +1,143 @@
-<div
-  class="container-fluid px-2 py-5 p-md-5 d-flex justify-content-center flex-column align-items-center"
->
-  <h4 class="text-center pb-2">Your Habit Analytics - {{ dateToday | date: 'MMMM yyyy' }}</h4>
-  <small class="text-muted"
-    >from {{ startOfMonth | date: 'MMMM dd, yyyy' }} to
-    {{ dateToday | date: 'MMMM dd, yyyy' }}</small
-  >
-
-  <div class="row w-100 mt-5">
-    <div class="col-md-4 mb-3">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title">Habits Tracked</h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              <h2 class="card-number text-center">
-                {{ habits()?.length }}
-              </h2>
-            </div>
-            <div class="col-12">
-              @if (habits()) {
-                @for (habit of habits(); track $index) {
-                  <div class="d-flex align-items-start">
-                    <span
-                      class="color-box"
-                      [ngStyle]="{
-                        color: habit.color,
-                        backgroundColor: habit.color,
-                      }"
-                    >
-                    </span>
-                    <span class="ms-3 habit-text">
-                      {{ habit.name }}
-                    </span>
-                  </div>
-                }
-              } @else {
-                <p class="text-center">Loading...</p>
-              }
-            </div>
-          </div>
+<div class="statistics-page py-5">
+  <div class="container">
+    <div class="row justify-content-center mb-4">
+      <div class="col-12 col-xl-10 col-xxl-8 text-center">
+        <div class="px-3 py-4">
+          <h4 class="fw-semibold mb-1">Your Habit Analytics</h4>
+          <p class="text-muted mb-2">
+            Showing progress from
+            <strong>{{ startOfMonth | date: 'MMMM dd, yyyy' }}</strong>
+            to
+            <strong>{{ dateToday | date: 'MMMM dd, yyyy' }}</strong>
+          </p>
         </div>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title">Overall Completion Rate</h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              <div class="d-flex flex-column align-items-center justify-content-center">
-                @if (statistics()?.completion_rates) {
-                  <canvas
-                    baseChart
-                    [data]="doughnutChartData"
-                    [options]="doughnutChartOptions"
-                    [type]="'doughnut'"
-                  ></canvas>
-                  <div
-                    class="d-flex flex-column align-items-center justify-content-center text-center"
-                    style="
-                      position: absolute;
-                      top: 38%;
-                      left: 50%;
-                      transform: translate(-50%, 0%);
-                      pointer-events: none;
-                    "
-                  >
-                    <span class="text-muted small lh-1">Overall</span>
-                    <span class="fw-bold fs-4 text-dark mt-1">
-                      {{ statistics()?.completion_rates?.total_percentage ?? 0 }}%
-                    </span>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 rounded-4 mx-auto">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <div>
+                <h5 class="card-title mb-1">Habits Tracked</h5>
+                <p class="text-muted mb-0">Active habits this month</p>
+              </div>
+              <span class="badge rounded-pill bg-primary-subtle text-primary py-2 px-3">
+                {{ habits()?.length ?? 0 }} habits
+              </span>
+            </div>
+
+            @if (habits()) {
+              <div class="list-group list-group-flush">
+                @for (habit of habits(); track $index) {
+                  <div class="list-group-item px-0 border-0 py-2">
+                    <div class="d-flex align-items-center gap-3">
+                      <span
+                        class="color-box rounded-2"
+                        [ngStyle]="{
+                          color: habit.color,
+                          backgroundColor: habit.color,
+                        }"
+                      ></span>
+                      <div>
+                        <div class="fw-semibold">{{ habit.name }}</div>
+                      </div>
+                    </div>
                   </div>
-                } @else {
-                  <p class="text-center">Loading...</p>
                 }
               </div>
-            </div>
+            } @else {
+              <p class="text-center text-muted mb-0">Loading habits...</p>
+            }
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title">Total Logs</h5>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 rounded-4 mx-auto">
+          <div class="card-body d-flex flex-column align-items-center">
+            <h5 class="card-title mb-4 text-center">Overall Completion</h5>
+
+            <div class="chart-card chart-wrapper mb-4 w-100 position-relative">
+              <canvas
+                baseChart
+                [data]="doughnutChartData"
+                [options]="doughnutChartOptions"
+                [type]="'doughnut'"
+                class="chart-canvas"
+              ></canvas>
+              <div
+                class="d-flex flex-column align-items-center justify-content-center text-center"
+                style="
+                  position: absolute;
+                  top: 38%;
+                  left: 50%;
+                  transform: translate(-50%, -80%);
+                  pointer-events: none;
+                "
+              >
+                <span class="text-muted small lh-1">Overall</span>
+                <span class="fw-bold fs-4 text-dark mt-1">
+                  {{ statistics()?.completion_rates?.total_percentage ?? 0 }}%
+                </span>
+              </div>
+            </div>
+
+            @if (statistics()?.completion_rates) {
+              <div class="w-100">
+                <div class="d-flex flex-wrap justify-content-between gap-2 mb-2">
+                  <small class="text-muted">Top habit:</small>
+                  <small class="fw-semibold text-dark text-break">
+                    {{ statistics()?.habit_with_max_streak?.habit_with_max_streak || '—' }}
+                  </small>
+                </div>
+              </div>
+            } @else {
+              <p class="text-center text-muted mb-0">Loading statistics...</p>
+            }
+          </div>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              @if (statistics()?.total_logs) {
-                <h2 class="card-number text-center">
-                  {{ statistics()?.total_logs }}
-                </h2>
-                <p class="text-center">(From all logs across all habits)</p>
-              } @else {
-                <p class="text-center">Loading...</p>
-              }
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100 rounded-4 mx-auto">
+          <div class="card-body">
+            <h5 class="card-title mb-4">Monthly Summary</h5>
+
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="summary-card p-3 rounded-4 bg-light">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                      <small class="text-muted">Total Logs</small>
+                      <h2 class="card-number mb-0">
+                        {{ statistics()?.total_logs ?? 0 }}
+                      </h2>
+                    </div>
+                  </div>
+                  <p class="mb-0 text-muted small">Total recorded log entries across all habits.</p>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="summary-card p-3 rounded-4 bg-light">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                      <small class="text-muted">Longest streak</small>
+                      <h5 class="mb-0 fw-semibold">
+                        {{ statistics()?.habit_with_max_streak?.habit_with_max_streak || '—' }}
+                      </h5>
+                    </div>
+                    <span class="badge rounded-pill bg-primary-subtle text-primary py-2 px-3">
+                      {{ statistics()?.habit_with_max_streak?.max_streak ?? 0 }} days
+                    </span>
+                  </div>
+                  <p class="mb-0 text-muted small">
+                    The habit with the highest consistent streak this month.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
