@@ -36,6 +36,14 @@
               <li>
                 <a
                   class="dropdown-item d-flex align-items-center gap-2 pointer"
+                  routerLink="/statistics"
+                  (click)="isMenuCollapsed.set(true)"
+                >
+                  <i class="ti ti-chart-bar-popular text-info"></i>
+                  Statistics
+                </a>
+                <a
+                  class="dropdown-item d-flex align-items-center gap-2 pointer"
                   routerLink="/habit-tracker"
                   (click)="isMenuCollapsed.set(true)"
                 >
@@ -61,6 +69,14 @@
           </li>
 
           <li class="nav-item d-lg-none">
+            <a
+              class="d-flex align-items-center pointer text-decoration-none text-secondary"
+              routerLink="/statistics"
+              (click)="isMenuCollapsed.set(true)"
+            >
+              <i class="ti ti-chart-bar-popular text-info me-2"></i>
+              Statistics
+            </a>
             <a
               class="d-flex align-items-center pointer text-decoration-none text-secondary"
               routerLink="/habit-tracker"
