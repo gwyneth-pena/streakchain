@@ -1,83 +1,108 @@
-<div
-  class="container-fluid px-2 py-5 p-md-5 d-flex justify-content-center flex-column align-items-center"
->
-  <h4 class="text-center pb-2">Annual Logs</h4>
-  <div class="row mt-3">
-    <div class="col-md-12">
-      <p>
-        <span class="me-2">
-          <i class="ti ti-chevron-left pointer" (click)="incrementDecrementYear(-1)"></i>
-        </span>
-        {{ currentYear() }}
-        <span class="ms-2">
-          <i class="ti ti-chevron-right pointer" (click)="incrementDecrementYear(1)"></i>
-        </span>
-      </p>
-    </div>
-  </div>
+<div class="container-fluid yearly-streaks-page px-2 py-4 py-md-5">
+  <div class="yearly-streaks-card rounded-4 w-100">
+    <div class="card-body p-3 p-md-4 p-lg-5">
+      <div
+        class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4"
+      >
+        <div>
+          <h4 class="fw-bold mb-1">Annual Logs</h4>
+          <p class="text-muted mb-0">Review your habit performance across the year at a glance.</p>
+        </div>
 
-  @if (habits()?.length !== 0) {
-    <div class="row mt-4 mt-md-0 w-100">
-      <div class="col-md-12 d-flex justify-content-end">
-        <button
-          class="btn btn-outline-secondary download-btn me-2"
-          (click)="downloadYearlyStreaks()"
-        >
-          <i class="ti ti-file-download"></i> Download
-        </button>
+        @if (habits()?.length !== 0) {
+          <button class="btn btn-outline-secondary download-btn" (click)="downloadYearlyStreaks()">
+            <i class="ti ti-file-download me-2"></i> Download
+          </button>
+        }
       </div>
-    </div>
-  }
 
-  <div class="row mt-4 w-100 calendar-table">
-    <div class="col-md-12">
-      <div class="table-responsive">
-        <table class="table table-hover table-bordered no-outer-borders">
-          <thead>
-            <tr>
-              <th class="habit-column">Habits</th>
-              @for (month of monthEntries; track month[0]) {
-                <th>
-                  {{ month[1] }}
-                </th>
-              }
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (habit of habits(); track habit.id) {
-              <tr class="align-middle">
-                <td class="habit-column pointer" [style.--border-color]="habit.color">
-                  {{ habit.name }}
-                  <br />
-                </td>
-                @for (month of monthEntries; track monthEntries[0]) {
-                  <td
-                    class="pointer text-center fw-bold log-nums"
-                    [ngStyle]="{
-                      color: habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.habit_color,
-                    }"
-                  >
-                    {{ habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.logs_count || 0 }}
-                  </td>
-                }
-                <td class="total-logs text-primary">
-                  {{ habitLogsByYear()?.[currentYear()]?.[habit?.id || '']?.logs_count || 0 }}
-                </td>
-              </tr>
-            }
-            @if (!habits()) {
-              <td [colSpan]="monthEntries.length + 2" class="text-center">Loading...</td>
-            }
-            @if (habits()?.length === 0) {
+      <div
+        class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 mb-4 mobile-controls"
+      >
+        <div class="d-flex align-items-center justify-content-center gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm rounded-circle p-2 year-arrow-rounded-circle"
+            (click)="incrementDecrementYear(-1)"
+            aria-label="Previous year"
+          >
+            <i class="ti ti-chevron-left"></i>
+          </button>
+          <div class="year-pill px-3 py-2 rounded-pill border bg-light fw-semibold">
+            {{ currentYear() }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm rounded-circle p-2 year-arrow-rounded-circle"
+            (click)="incrementDecrementYear(1)"
+            aria-label="Next year"
+          >
+            <i class="ti ti-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="text-muted small">
+          <i class="ti ti-calendar-event me-2"></i>
+          Showing data for {{ currentYear() }}
+        </div>
+      </div>
+
+      <div class="calendar-table">
+        <div class="table-responsive rounded-3 border">
+          <table class="table table-hover align-middle mb-0 no-outer-borders">
+            <thead class="table-light">
               <tr>
-                <td [colSpan]="monthEntries.length + 2" class="text-center">
-                  <i class="ti ti-sad"></i> No habits yet.
-                </td>
+                <th class="habit-column text-start">Habits</th>
+                @for (month of monthEntries; track month[0]) {
+                  <th class="text-center text-uppercase small fw-semibold text-muted">
+                    {{ month[1] }}
+                  </th>
+                }
+                <th class="text-center text-uppercase small fw-semibold text-muted">Total</th>
               </tr>
-            }
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              @for (habit of habits(); track habit.id) {
+                <tr class="align-middle">
+                  <td
+                    class="habit-column fw-semibold text-start"
+                    [style.--border-color]="habit.color"
+                  >
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="dot-indicator" [style.background-color]="habit.color"></span>
+                      <span>{{ habit.name }}</span>
+                    </div>
+                  </td>
+                  @for (month of monthEntries; track month[0]) {
+                    <td
+                      class="pointer text-center fw-bold log-nums"
+                      [ngStyle]="{
+                        color: habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.habit_color,
+                      }"
+                    >
+                      {{ habitLogsByYear()?.[month[0]]?.[habit?.id || '']?.logs_count || 0 }}
+                    </td>
+                  }
+                  <td class="total-logs text-primary fw-bold text-center">
+                    {{ habitLogsByYear()?.[currentYear()]?.[habit?.id || '']?.logs_count || 0 }}
+                  </td>
+                </tr>
+              }
+              @if (!habits()) {
+                <tr>
+                  <td [colSpan]="monthEntries.length + 2" class="text-center py-4">Loading...</td>
+                </tr>
+              }
+              @if (habits()?.length === 0) {
+                <tr>
+                  <td [colSpan]="monthEntries.length + 2" class="text-center py-4">
+                    <i class="ti ti-sad me-2"></i> No habits yet.
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

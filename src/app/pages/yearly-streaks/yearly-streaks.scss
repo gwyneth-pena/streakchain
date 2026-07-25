@@ -1,97 +1,109 @@
+.yearly-streaks-page {
+  min-height: calc(100vh - 120px);
+}
+
+.yearly-streaks-card {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.download-btn {
+  font-size: 0.9rem;
+}
+
+.year-pill {
+  min-width: 104px;
+  text-align: center;
+}
+
+
+.year-arrow-rounded-circle {
+  height: 40px;
+  width: 40px;
+}
+
+.calendar-table {
+  overflow-x: auto;
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table {
+    font-size: 0.9rem;
+    min-width: 760px;
+  }
+
+  .habit-column {
+    min-width: 180px;
+    max-width: 180px;
+    position: sticky;
+    left: 0;
+    background: var(--bs-body-bg);
+    box-shadow: inset -1px 0 0 rgba(15, 23, 42, 0.08);
+    border-left: 3px solid var(--border-color, transparent);
+  }
+
+  .dot-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .log-nums {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .total-logs {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .no-outer-borders thead tr:first-child {
+    border-top: 0 !important;
+  }
+
+  .no-outer-borders tbody tr:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .no-outer-borders th:first-child,
+  .no-outer-borders td:first-child {
+    border-left: 0 !important;
+  }
+
+  .no-outer-borders th:last-child,
+  .no-outer-borders td:last-child {
+    border-right: 0 !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .yearly-streaks-card {
+    border-radius: 1.25rem !important;
+  }
+
+  .mobile-controls {
+    align-items: center;
+    text-align: center;
+  }
+
+  .mobile-controls > div:first-child {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .mobile-controls .text-muted {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
   .download-btn {
-    font-size: 12px;
+    width: 100%;
   }
-  
-  .calendar-table {
-    margin-top: 1.5rem;
-
-    th,
-    td {
-      text-align: center;
-    }
-
-    th > div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .fw-bold {
-        font-weight: 600;
-      }
-
-      .text-muted {
-        font-size: 0.75rem;
-      }
-    }
-
-    .habit-column {
-      width: 150px;    
-      max-width: 150px;
-      min-width: 150px;
-      position: sticky !important;
-      left: 0px;
-    }
-
-    .habit-column::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -20px;
-      width: 20px; 
-      height: 100%;
-      border-width: 1px;
-      pointer-events: none;
-      z-index: 11;
-      border:none;
-      background: white !important;
-    }
-
-    .habit-column::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 5px; 
-      height: 100%;
-      background-color: var(--border-color, white);
-      pointer-events: none;
-      z-index: 11;
-    }
-
-    .no-habits {
-      text-align: center;
-      color: #6f6362;
-    }
-
-    .log-nums{
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .total-logs{
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .table{
-      font-size: 12px;
-    }
-
-    .no-outer-borders thead tr:first-child {
-      border-top: 0 !important;
-    }
-
-    .no-outer-borders tbody tr:last-child {
-      border-bottom: 0 !important;
-    }
-
-    .no-outer-borders th:first-child,
-    .no-outer-borders td:first-child {
-      border-left: 0 !important;
-    }
-
-    .no-outer-borders th:last-child,
-    .no-outer-borders td:last-child {
-      border-right: 0 !important;
-    }
-  }
+}

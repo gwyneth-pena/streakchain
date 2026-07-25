@@ -103,7 +103,7 @@ export class Notes {
 
     modalRef.componentInstance.data.set({
       title: 'Delete Note',
-      message: `Are you sure you want to delete this note (${noteText})?`,
+      message: `Are you sure you want to delete this note (${noteText?.slice(0, 100)})?`,
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel',
     });

@@ -1,151 +1,145 @@
 .habit-tracker-container {
-  padding: 3rem 1rem;
+  min-height: calc(100vh - 120px);
+}
 
-  @media (min-width: 768px) {
-    padding-left: 3rem;
-    padding-right: 3rem;
+.habit-tracker-card {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.add-habit-btn,
+.download-btn {
+  font-size: 0.9rem;
+}
+
+.frequency-icon {
+  font-size: 1.3rem;
+}
+
+.frequency {
+  font-size: 0.95rem;
+}
+
+.year-pill {
+  min-width: 140px;
+  text-align: center;
+}
+
+.year-arrow-rounded-circle {
+  height: 40px;
+  width: 40px;
+}
+
+.calendar-table {
+  overflow-x: auto;
+
+  .table-responsive {
+    overflow-x: auto;
   }
 
-  .add-habit-btn, .download-btn {
-    font-size: 12px;
+  .table {
+    font-size: 0.9rem;
+    min-width: 760px;
   }
 
-  .frequency-icon {
-    font-size: 1.3rem;
+  th > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .fw-bold {
+      font-weight: 600;
+    }
+
+    .text-muted {
+      font-size: 0.75rem;
+    }
   }
 
-  .frequency{
-    font-size: 14px;
+  .today-column {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
   }
 
-  .month-navigation {
+  .habit-column {
+    min-width: 180px;
+    max-width: 180px;
+    position: sticky;
+    left: 0;
+    background: var(--bs-body-bg);
+    box-shadow: inset -1px 0 0 rgba(15, 23, 42, 0.08);
+    border-left: 3px solid var(--border-color, transparent);
+  }
+
+  .habit-options {
+    font-size: 1rem;
+    color: #6f6362;
+    display: none;
+  }
+
+  tr:hover .habit-options,
+  td.habit-column:hover .habit-options {
+    display: inline-block;
+  }
+
+  .bg-meet {
+    background-color: #aee6bd;
+  }
+
+  .no-outer-borders thead tr:first-child {
+    border-top: 0 !important;
+  }
+
+  .no-outer-borders tbody tr:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .no-outer-borders th:first-child,
+  .no-outer-borders td:first-child {
+    border-left: 0 !important;
+  }
+
+  .no-outer-borders th:last-child,
+  .no-outer-borders td:last-child {
+    border-right: 0 !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .habit-tracker-card {
+    border-radius: 1.25rem !important;
+  }
+
+  .mobile-controls {
+    align-items: center;
     text-align: center;
-    margin-bottom: 1rem;
-
-    p {
-      margin: 0;
-
-      span {
-        cursor: pointer;
-
-        &.me-2 {
-          margin-right: 0.5rem;
-        }
-
-        &.ms-2 {
-          margin-left: 0.5rem;
-        }
-      }
-    }
   }
 
-  .calendar-table {
-    margin-top: 1.5rem;
-
-    th,
-    td {
-      text-align: center;
-    }
-
-    th > div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .fw-bold {
-        font-weight: 600;
-      }
-
-      .text-muted {
-        font-size: 0.75rem;
-      }
-    }
-
-    tbody td:first-child + td {
-      border-left: none;
-    }
-
-    .no-habits {
-      text-align: center;
-      color: #6f6362;
-    }
-
-    .table {
-      font-size: 12px;
-    }
-
-    .no-outer-borders thead tr:first-child {
-      border-top: 0 !important;
-    }
-
-    .no-outer-borders tbody tr:last-child {
-      border-bottom: 0 !important;
-    }
-
-    .no-outer-borders th:first-child,
-    .no-outer-borders td:first-child {
-      border-left: 0 !important;
-    }
-
-    .no-outer-borders th:last-child,
-    .no-outer-borders td:last-child {
-      border-right: 0 !important;
-    }
-
-    .today-column {
-      background-color: rgba(13, 110, 253, 0.1);
-      color: #0d6efd;
-    }
-
-    .habit-column {
-      width: 150px;    
-      max-width: 150px;
-      min-width: 150px;
-      position: sticky !important;
-      left: 0px;
-    }
-
-    .habit-column::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -20px;
-      width: 20px; 
-      height: 100%;
-      border-width: 1px;
-      pointer-events: none;
-      z-index: 11;
-      border:none;
-      background: white !important;
-    }
-
-    .habit-column::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 5px; 
-      height: 100%;
-      background-color: var(--border-color, white);
-      pointer-events: none;
-      z-index: 11;
-    }
-
-    .habit-options {
-      font-size: 16px;
-      color: #6f6362;
-      display: none;
-    }
-
-    tr:hover .habit-options,
-    td.habit-column:hover .habit-options {
-      display: inline-block;
-    }
-
-
-    .bg-meet{
-      background-color: #aee6bd
-    }
+  .mobile-controls > div:first-child {
+    justify-content: center;
+    width: 100%;
   }
 
+  .mobile-controls .text-muted {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .button-actions {
+    flex-direction: row !important;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .button-actions .btn {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .download-btn,
+  .add-habit-btn {
+    width: auto;
+  }
 }

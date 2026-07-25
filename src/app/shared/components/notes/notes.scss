@@ -1,43 +1,49 @@
 @use '../../../../../public/styles/colors.scss' as *;
 
+.notes-section {
+  width: 100%;
+}
+
 .add-note-btn {
-    font-size: 12px;
+  font-size: 0.9rem;
 }
 
 .note-board {
-    background-color: #5A5A5A;
-    padding: 20px 40px;
-    border-radius: 0.5rem;
-    min-height: 250px;
-    border : 5px solid $primary;
+  background: linear-gradient(135deg, rgba($primary, 0.06), rgba($primary, 0.02));
+  min-height: 220px;
+  border: 1px solid rgba($primary, 0.12);
 }
 
 .note {
-    background: #FFF1A8;
-    border-radius: 10px;
-    padding: 20px;
-    word-wrap: break-word;
+  background: var(--bs-body-bg);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    p {
-        font-size: 16px;
-    }
+  p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
 
-    i {
-        font-size: 18px !important;
-        cursor: pointer;
-    }
+  i {
+    font-size: 1rem !important;
+    cursor: pointer;
+    color: $primary;
+  }
 }
 
-
 @media (max-width: 768px) {
-    .note-board {
-        padding: 20px 10px !important;
-        min-height: 150px !important;
-    }
+  .note-board {
+    min-height: 160px;
+  }
 
-    .note {
-        p {
-            font-size: 14px !important;
-        }
+  .note {
+    p {
+      font-size: 0.9rem !important;
     }
+  }
 }

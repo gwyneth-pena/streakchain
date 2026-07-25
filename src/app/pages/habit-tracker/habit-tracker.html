@@ -1,121 +1,156 @@
-<div class="habit-tracker-container container-fluid">
-  <div class="row month-navigation">
-    <div class="col-md-12">
-      <p>
-        <span class="me-2">
-          <i class="ti ti-chevron-left" (click)="onCurrentMonthYearChange(-1)"></i>
-        </span>
-        {{ currentMonthYear.month }} {{ currentMonthYear.year }}
-        <span class="ms-2">
-          <i class="ti ti-chevron-right" (click)="onCurrentMonthYearChange(1)"></i>
-        </span>
-      </p>
-    </div>
-  </div>
-  <div class="row mt-4 mt-md-0">
-    <div class="col-md-12 d-flex justify-content-end">
-      @if (habits()?.length !== 0) {
-        <button class="btn btn-outline-secondary download-btn me-2" (click)="downloadHabits()">
-          <i class="ti ti-file-download"></i> Download
-        </button>
-      }
-      <button class="btn btn-outline-primary add-habit-btn" (click)="openSaveHabitModal()">
-        <i class="ti ti-plus"></i> Add Habit
-      </button>
-    </div>
-  </div>
+<div class="habit-tracker-container container-fluid px-2 py-4 py-md-5">
+  <div class="habit-tracker-card rounded-4 w-100">
+    <div class="card-body p-3 p-md-4 p-lg-5">
+      <div
+        class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4"
+      >
+        <div>
+          <h4 class="fw-bold mb-1">Habit Tracker</h4>
+          <p class="text-muted mb-0">Track your daily habit progress and stay consistent.</p>
+        </div>
 
-  <div class="row calendar-table">
-    <div class="col-md-12 table-responsive">
-      <table class="table table-hover table-bordered no-outer-borders">
-        <thead>
-          <tr>
-            <th class="habit-column">Habits</th>
-            @for (day of calendarDays(); track day.day + '-' + currentMonthYear.monthNumber) {
-              <th [ngClass]="{ 'today-column': day.isToday }">
-                <div>
-                  <span class="fw-bold" [ngClass]="{ 'text-primary': day.isToday }">
-                    {{ day.day }}
-                  </span>
-                  <span class="text-muted">{{ day.dayName }}</span>
-                </div>
-              </th>
-            }
-            <th>Achieved</th>
-            <th>Goal</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (habit of habits(); track habit.id) {
-            <tr class="align-middle">
-              <td class="habit-column pointer" [style.--border-color]="habit.color">
-                {{ habit.name }}
-                <br />
-                <div class="habit-options">
-                  <i (click)="openSaveHabitModal(habit)" class="ti ti-pencil me-2 pointer"></i>
-                  <i (click)="deleteHabit(habit)" class="ti ti-trash me-2 pointer"></i>
-                </div>
-              </td>
-              @for (day of calendarDays(); track day.day) {
-                <td
-                  data-testid="habit-tracker-cell"
-                  [ngClass]="{ 'today-column': day.isToday }"
-                  class="pointer"
-                  (click)="
-                    hasHabitLog(habit, day.day)
-                      ? deleteHabitLog(getHabitLogForDay(habit, day.day))
-                      : saveHabitLog(habit, day.day)
-                  "
-                >
-                  @if (hasHabitLog(habit, day.day)) {
-                    <i
-                      class="ti ti-star-filled frequency-icon my-0 py-0"
-                      [ngStyle]="{
-                        color: habit.color,
-                      }"
-                    ></i>
+        <div class="d-flex flex-wrap justify-content-md-end gap-2 button-actions">
+          @if (habits()?.length !== 0) {
+            <button class="btn btn-outline-secondary download-btn" (click)="downloadHabits()">
+              <i class="ti ti-file-download me-2"></i> Download
+            </button>
+          }
+          <button class="btn btn-outline-primary add-habit-btn" (click)="openSaveHabitModal()">
+            <i class="ti ti-plus me-2"></i> Add Habit
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 mb-4 mobile-controls"
+      >
+        <div class="d-flex align-items-center justify-content-center gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm rounded-circle p-2 year-arrow-rounded-circle"
+            (click)="onCurrentMonthYearChange(-1)"
+            aria-label="Previous month"
+          >
+            <i class="ti ti-chevron-left"></i>
+          </button>
+          <div class="year-pill px-3 py-2 rounded-pill border bg-light fw-semibold">
+            {{ currentMonthYear.month }} {{ currentMonthYear.year }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm rounded-circle p-2 year-arrow-rounded-circle"
+            (click)="onCurrentMonthYearChange(1)"
+            aria-label="Next month"
+          >
+            <i class="ti ti-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="text-muted small">
+          <i class="ti ti-calendar-event me-2"></i>
+          Tracking {{ currentMonthYear.month }} {{ currentMonthYear.year }}
+        </div>
+      </div>
+
+      <div class="calendar-table">
+        <div class="table-responsive rounded-3 border">
+          <table class="table table-hover align-middle mb-0 no-outer-borders">
+            <thead class="table-light">
+              <tr>
+                <th class="habit-column text-start">Habits</th>
+                @for (day of calendarDays(); track day.day + '-' + currentMonthYear.monthNumber) {
+                  <th [ngClass]="{ 'today-column': day.isToday }" class="text-center">
+                    <div>
+                      <span class="fw-bold" [ngClass]="{ 'text-primary': day.isToday }">
+                        {{ day.day }}
+                      </span>
+                      <span class="text-muted">{{ day.dayName }}</span>
+                    </div>
+                  </th>
+                }
+                <th class="text-center text-uppercase small fw-semibold text-muted">Achieved</th>
+                <th class="text-center text-uppercase small fw-semibold text-muted">Goal</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (habit of habits(); track habit.id) {
+                <tr class="align-middle">
+                  <td class="habit-column pointer text-start" [style.--border-color]="habit.color">
+                    <div class="d-flex align-items-center justify-content-between gap-2">
+                      <span>{{ habit.name }}</span>
+                      <div class="habit-options">
+                        <i
+                          (click)="openSaveHabitModal(habit)"
+                          class="ti ti-pencil me-2 pointer"
+                        ></i>
+                        <i (click)="deleteHabit(habit)" class="ti ti-trash pointer"></i>
+                      </div>
+                    </div>
+                  </td>
+                  @for (day of calendarDays(); track day.day) {
+                    <td
+                      data-testid="habit-tracker-cell"
+                      [ngClass]="{ 'today-column': day.isToday }"
+                      class="pointer text-center"
+                      (click)="
+                        hasHabitLog(habit, day.day)
+                          ? deleteHabitLog(getHabitLogForDay(habit, day.day))
+                          : saveHabitLog(habit, day.day)
+                      "
+                    >
+                      @if (hasHabitLog(habit, day.day)) {
+                        <i
+                          class="ti ti-star-filled frequency-icon my-0 py-0"
+                          [ngStyle]="{
+                            color: habit.color,
+                          }"
+                        ></i>
+                      }
+                    </td>
                   }
-                </td>
+                  <td
+                    class="fw-bold text-secondary frequency text-center"
+                    [ngClass]="{
+                      'bg-meet': habit.logs && habit.logs.length >= habit.frequency,
+                    }"
+                  >
+                    {{ habit.logs?.length }}
+                  </td>
+                  <td
+                    class="fw-bold text-primary frequency text-center"
+                    [ngClass]="{
+                      'bg-meet': habit.logs && habit.logs.length >= habit.frequency,
+                    }"
+                  >
+                    {{ habit.frequency }}
+                  </td>
+                </tr>
               }
-              <td
-                class="fw-bold text-secondary frequency"
-                [ngClass]="{
-                  'bg-meet': habit.logs && habit.logs.length >= habit.frequency,
-                }"
-              >
-                {{ habit.logs?.length }}
-              </td>
-              <td
-                class="fw-bold text-primary frequency"
-                [ngClass]="{
-                  'bg-meet': habit.logs && habit.logs.length >= habit.frequency,
-                }"
-              >
-                {{ habit.frequency }}
-              </td>
-            </tr>
-          }
-          @if (!habits()) {
-            <td [colSpan]="calendarDays().length + 3" class="text-center">Loading...</td>
-          }
-          @if (habits()?.length === 0) {
-            <tr>
-              <td [colSpan]="calendarDays().length + 3" class="text-center">
-                <i class="ti ti-sad"></i> No habits yet. Please click the button on the upper right
-                to add one.
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </div>
+              @if (!habits()) {
+                <tr>
+                  <td [colSpan]="calendarDays().length + 3" class="text-center py-4">Loading...</td>
+                </tr>
+              }
+              @if (habits()?.length === 0) {
+                <tr>
+                  <td [colSpan]="calendarDays().length + 3" class="text-center py-4">
+                    <i class="ti ti-sad me-2"></i> No habits yet. Please click the button on the
+                    upper right to add one.
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-  <div class="mt-5">
-    <app-notes
-      [year]="currentMonthYear.year"
-      [month]="currentMonthYear.monthNumber"
-      [numberOfDays]="currentMonthYear.numberOfDays"
-    ></app-notes>
+      <div class="mt-5">
+        <app-notes
+          [year]="currentMonthYear.year"
+          [month]="currentMonthYear.monthNumber"
+          [numberOfDays]="currentMonthYear.numberOfDays"
+        ></app-notes>
+      </div>
+    </div>
   </div>
 </div>
