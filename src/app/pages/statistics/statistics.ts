@@ -14,6 +14,7 @@ import {
   ChartConfiguration,
 } from 'chart.js';
 import { HabitStatistics, StatisticsService } from '../../shared/services/statistics-service';
+import { DateService } from '../../shared/services/date-service';
 
 @Component({
   selector: 'app-statistics',
@@ -39,6 +40,7 @@ export class Statistics {
   constructor(
     private habitsService: HabitService,
     private statisticsService: StatisticsService,
+    private dateService: DateService,
     private title: Title,
     private meta: Meta,
   ) {
@@ -47,11 +49,13 @@ export class Statistics {
   }
 
   async ngOnInit() {
+    const startDateStr = this.dateService.formatLocalDate(this.startOfMonth);
+    const endDateStr = this.dateService.formatLocalDate(this.dateToday);
     this.habits.set(await this.getHabits());
     this.statistics.set(
       await this.getStatistics(
-        this.startOfMonth.toISOString()?.split('T')[0],
-        this.dateToday.toISOString()?.split('T')[0],
+        startDateStr,
+        endDateStr,
       ),
     );
   }
